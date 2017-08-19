@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Hangfire.Annotations;
 
-namespace Hey.Api.Rest.Models
+namespace Hey.Core.Models
 {
     public class HeyRememberDto
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Web;
-using Hey.Api.Rest.Models;
+using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service.Concrete
 {

@@ -1,6 +1,7 @@
 ﻿using System;
-using Hey.Api.Rest.Models;
+using Hangfire;
 using Hey.Api.Rest.Service.Concrete;
+using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service
 {

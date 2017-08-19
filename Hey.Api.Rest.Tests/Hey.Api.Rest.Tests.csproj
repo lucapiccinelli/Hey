@@ -73,6 +73,10 @@
       <Project>{CD8730FF-2A18-4658-9E71-D5C5AC549731}</Project>
       <Name>Hey.Api.Rest</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hey.Core\Hey.Core.csproj">
+      <Project>{AB9551CB-90AE-4166-871C-4D7F143DFB39}</Project>
+      <Name>Hey.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -154,7 +154,6 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="HangfireDashboardStartup.cs" />
-    <Compile Include="Models\HeyRememberDTO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Concrete\IServiceResolver.cs" />
   </ItemGroup>
@@ -173,6 +172,13 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hey.Core\Hey.Core.csproj">
+      <Project>{AB9551CB-90AE-4166-871C-4D7F143DFB39}</Project>
+      <Name>Hey.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

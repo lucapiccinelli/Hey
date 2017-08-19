@@ -5,7 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
-using Hey.Api.Rest.Models;
+using Hey.Core.Models;
 using NUnit.Framework;
 
 namespace Hey.Api.Rest.Tests

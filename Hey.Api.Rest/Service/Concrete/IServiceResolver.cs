@@ -1,4 +1,4 @@
-using Hey.Api.Rest.Models;
+using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service.Concrete
 {

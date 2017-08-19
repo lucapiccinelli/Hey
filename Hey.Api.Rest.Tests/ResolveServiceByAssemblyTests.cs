@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Hey.Api.Rest.Models;
 using Hey.Api.Rest.Service;
 using Hey.Api.Rest.Service.Concrete;
+using Hey.Core.Models;
 using NUnit.Framework;
 using NUnit.Framework.Internal;
 

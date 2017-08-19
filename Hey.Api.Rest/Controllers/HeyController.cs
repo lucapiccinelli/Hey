@@ -6,8 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Hangfire;
-using Hey.Api.Rest.Models;
 using Hey.Api.Rest.Service;
+using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Controllers
 {
