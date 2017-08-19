@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Hey.Core.Services
 {
-    class EMailSenderService : ISenderService
+    public class EMailSenderService : ISenderService
     {
         public void Send(IMessageProvider messageProvider, string receiverString)
         {

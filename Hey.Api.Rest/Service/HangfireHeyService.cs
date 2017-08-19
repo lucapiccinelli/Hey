@@ -11,7 +11,7 @@ namespace Hey.Api.Rest.Service
 
         public IHeyResponse Handle(HeyRememberDto heyRemember)
         {
-            IConcreteService service = _serviceResolver.Find(heyRemember);
+            IHangfireService service = _serviceResolver.Find(heyRemember);
             return service.CreateNewTask();
         }
     }

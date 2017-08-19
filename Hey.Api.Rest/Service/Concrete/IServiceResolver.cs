@@ -4,6 +4,6 @@ namespace Hey.Api.Rest.Service.Concrete
 {
     public interface IServiceResolver
     {
-        IConcreteService Find(HeyRememberDto heyRemember);
+        IHangfireService Find(HeyRememberDto heyRemember);
     }
 }

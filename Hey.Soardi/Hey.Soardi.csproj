@@ -43,6 +43,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Connections.cs" />
+    <Compile Include="Mail\NoteVeicoloMailSender.cs" />
     <Compile Include="NoteVeicoloMessageProvider.cs" />
     <Compile Include="NoteVeicoloSender.cs" />
     <Compile Include="Model\Carrozzeria.designer.cs">
@@ -84,9 +85,7 @@
       <Name>Hey.Core</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Mail\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

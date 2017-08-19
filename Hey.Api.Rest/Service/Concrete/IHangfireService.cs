@@ -1,6 +1,6 @@
 ﻿namespace Hey.Api.Rest.Service.Concrete
 {
-    public interface IConcreteService
+    public interface IHangfireService
     {
         IHeyResponse CreateNewTask();
     }

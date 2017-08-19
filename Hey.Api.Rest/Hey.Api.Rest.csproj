@@ -143,11 +143,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ResolveMethodByFireMeAttribute.cs" />
     <Compile Include="Service\Concrete\ResolveServiceByAssembly.cs" />
     <Compile Include="Service\HangfireHeyService.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HeyController.cs" />
-    <Compile Include="Service\Concrete\IConcreteService.cs" />
+    <Compile Include="Service\Concrete\IHangfireService.cs" />
     <Compile Include="Service\IHeyResponse.cs" />
     <Compile Include="Service\IHeyService.cs" />
     <Compile Include="Global.asax.cs">

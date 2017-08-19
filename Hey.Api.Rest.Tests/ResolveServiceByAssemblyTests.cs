@@ -11,16 +11,16 @@ using NUnit.Framework.Internal;
 
 namespace Hey.Api.Rest.Tests
 {
-    [TestFixture()]
+    [TestFixture]
     class ResolveServiceByAssemblyTests
     {
         [Test]
         public void TestThatTheResolverCanIstanciateTheConcreteClass()
         {
             ResolveServiceByAssembly resolver = new ResolveServiceByAssembly();
-            IConcreteService service = resolver.Find(new HeyRememberDto()
+            IHangfireService service = resolver.Find(new HeyRememberDto()
             {
-                Domain = "Api.Rest.Tests",
+                Domain = "Hey.Api.Rest.Tests",
                 Type = "",
                 Id = "TestService"
             });
@@ -29,7 +29,7 @@ namespace Hey.Api.Rest.Tests
         }
     }
 
-    internal class TestService : IConcreteService
+    internal class TestService : IHangfireService
     {
         public TestService(HeyRememberDto heyRemember)
         {
