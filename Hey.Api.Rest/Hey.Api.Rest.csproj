@@ -143,7 +143,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MethodBinder.cs" />
     <Compile Include="ResolveMethodByFireMeAttribute.cs" />
+    <Compile Include="Service\BackgroundJobService.cs" />
     <Compile Include="Service\Concrete\ResolveServiceByAssembly.cs" />
     <Compile Include="Service\HangfireHeyService.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -179,6 +181,10 @@
     <ProjectReference Include="..\Hey.Core\Hey.Core.csproj">
       <Project>{AB9551CB-90AE-4166-871C-4D7F143DFB39}</Project>
       <Name>Hey.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hey.Soardi\Hey.Soardi.csproj">
+      <Project>{3cb257d9-9781-489f-bea7-e6d4f1bb8635}</Project>
+      <Name>Hey.Soardi</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

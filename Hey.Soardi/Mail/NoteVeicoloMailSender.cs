@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,9 +18,9 @@ namespace Hey.Soardi.Mail
         }
 
         [FireMe("Note")]
-        public void Send(int idNota, string receiverMail)
+        public void Send(long idNota, string receiverMail)
         {
-            _noteVeicoloSender.Send(idNota, receiverMail);
+            _noteVeicoloSender.Send((int) idNota, receiverMail);
         }
     }
 }

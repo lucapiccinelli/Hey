@@ -7,12 +7,13 @@ namespace Hey.Api.Rest.Service
 {
     public class HangfireHeyService : IHeyService
     {
-        private IServiceResolver _serviceResolver;
+        //private IServiceResolver _serviceResolver;
 
         public IHeyResponse Handle(HeyRememberDto heyRemember)
         {
-            IHangfireService service = _serviceResolver.Find(heyRemember);
-            return service.CreateNewTask();
+            //IHangfireService service = _serviceResolver.Find(heyRemember);
+            //return service.CreateNewTask();
+            return new BackgroundJobService(heyRemember).CreateNewTask();
         }
     }
 }

@@ -20,17 +20,17 @@ namespace Hey.Api.Rest.Tests
             var client = new HttpClient();
             var heyObj = new HeyRememberDto()
             {
-                Domain = "Test",
-                Type = "Post",
-                Id = "1",
+                Domain = "Hey.Soardi",
+                Type = "Mail",
+                Id = "Note",
                 When = new []{DateTime.Now, DateTime.UtcNow},
-                DomainSpecificData = "{TestId: \"idValue\", TestValue: \"banana\"}"
+                DomainSpecificData = "[1, \"banana\"]"
             };
 
-            using (var response = await client.PostAsJsonAsync("http://localhost.fiddler:60402/api/Hey", heyObj))
+            using (var response = await client.PostAsJsonAsync("http://localhost:60402/api/Hey", heyObj))
             {
                 Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-                Assert.AreEqual("http://localhost:60402/api/Hey/1", response.Headers.Location.ToString());
+                Assert.AreEqual("http://localhost:60402/api/Hey/Note", response.Headers.Location.ToString());
             }
         }
     }

@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="NoteVeicoloMessageProviderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ResolveTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\Hey.Soardi\app.config">
@@ -52,6 +53,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hey.Api.Rest\Hey.Api.Rest.csproj">
+      <Project>{CD8730FF-2A18-4658-9E71-D5C5AC549731}</Project>
+      <Name>Hey.Api.Rest</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hey.Core\Hey.Core.csproj">
+      <Project>{AB9551CB-90AE-4166-871C-4D7F143DFB39}</Project>
+      <Name>Hey.Core</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hey.Soardi\Hey.Soardi.csproj">
       <Project>{3CB257D9-9781-489F-BEA7-E6D4F1BB8635}</Project>
       <Name>Hey.Soardi</Name>

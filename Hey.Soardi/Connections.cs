@@ -9,10 +9,12 @@ namespace Hey.Soardi
 {
     static class Connections
     {
+        public static readonly string CarrozeriaHost;
         public static readonly string Carrozzeria;
 
         static Connections()
         {
+            //CarrozeriaHost = ConfigurationManager.AppSettings["CarrozeriaHost"];
             Carrozzeria = ConfigurationManager.ConnectionStrings["Carrozzeria2017"].ConnectionString;
         }
     }
