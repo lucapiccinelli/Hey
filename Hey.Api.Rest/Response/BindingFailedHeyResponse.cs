@@ -7,19 +7,9 @@ namespace Hey.Api.Rest.Response
 {
     public class BindingFailedHeyResponse : IHeyResponse
     {
-        public IHttpActionResult Execute(ApiController controller, HeyRememberDto heyRemember)
+        public IHttpActionResult Execute(ApiController controller)
         {
             throw new NotImplementedException();
-        }
-
-        public IHeyResponse Prototype(IMethodBinder methodBinder)
-        {
-            return new BindingFailedHeyResponse();
-        }
-
-        public static BindingFailedHeyResponse MakePrototype()
-        {
-            return new BindingFailedHeyResponse();
         }
     }
 }

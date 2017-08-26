@@ -4,6 +4,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Hey.Api.Rest.Response;
+using Hey.Api.Rest.Schedules;
 using Hey.Api.Rest.Service;
 using Hey.Core.Models;
 using Moq;
@@ -22,16 +23,16 @@ namespace Hey.Api.Rest.Tests
             MethodBinder binder = new MethodBinder(method, new HeyRememberDto());
 
             HeyResponseFactory factory = new HeyResponseFactory(binder);
-            IHeyResponse response = factory.Make(BackgroundHeyResponse.MakePrototype());
+            IHeyResponse response = factory.Make(BackgroundScheduleType.MakePrototype());
 
-            Assert.IsInstanceOf<BackgroundHeyResponse>(response);
+            Assert.IsInstanceOf<OkHeyResponse>(response);
         }
 
         [Test]
         public void TestThatIfTheMethodIsNotCallableICreatesTheNotOkResponse()
         {
             HeyResponseFactory factory = new HeyResponseFactory(new MethodNotFound(new HeyRememberDto()));
-            IHeyResponse response = factory.Make(BackgroundHeyResponse.MakePrototype());
+            IHeyResponse response = factory.Make(BackgroundScheduleType.MakePrototype());
 
             Assert.IsInstanceOf<MethodNotFoundHeyResponse>(response);
         }
@@ -43,7 +44,7 @@ namespace Hey.Api.Rest.Tests
             MethodBinder binder = new MethodBinder(method, new HeyRememberDto());
 
             HeyResponseFactory factory = new HeyResponseFactory(binder);
-            IHeyResponse response = factory.Make(BackgroundHeyResponse.MakePrototype());
+            IHeyResponse response = factory.Make(BackgroundScheduleType.MakePrototype());
 
             Assert.IsInstanceOf<ParametersErrorHeyResponse>(response);
         }
@@ -58,7 +59,7 @@ namespace Hey.Api.Rest.Tests
             });
 
             HeyResponseFactory factory = new HeyResponseFactory(binder);
-            IHeyResponse response = factory.Make(BackgroundHeyResponse.MakePrototype());
+            IHeyResponse response = factory.Make(BackgroundScheduleType.MakePrototype());
 
             Assert.IsInstanceOf<ParametersErrorHeyResponse>(response);
             Assert.AreEqual(1, ((ParametersErrorHeyResponse) response).ParamNum);

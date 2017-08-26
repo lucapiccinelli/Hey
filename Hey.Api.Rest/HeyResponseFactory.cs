@@ -12,12 +12,12 @@ namespace Hey.Api.Rest
             _methodBinder = methodBinder;
         }
 
-        public IHeyResponse Make(IHeyResponse prototype)
+        public IHeyResponse Make(IScheduleType prototype)
         {
             BinderCanCallTheMethod binderCanCall = new BinderCanCallTheMethod(_methodBinder);
             if (binderCanCall.Can)
             {
-                return prototype.Prototype(_methodBinder);
+                return new OkHeyResponse(_methodBinder, prototype.Prototype());
             }
 
             if (binderCanCall.ExecutionResultEnum == MethodExecutionResultEnum.Empty)

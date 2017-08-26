@@ -151,17 +151,21 @@
     <Compile Include="IBoundMethodConsumer.cs" />
     <Compile Include="IMethodBinder.cs" />
     <Compile Include="IResolveMethod.cs" />
+    <Compile Include="IScheduleType.cs" />
     <Compile Include="MethodBinder.cs" />
     <Compile Include="MethodExecutionResultEnum.cs" />
     <Compile Include="MethodNotFound.cs" />
     <Compile Include="ResolveMethodByFireMeAttribute.cs" />
-    <Compile Include="Response\BackgroundHeyResponse.cs" />
     <Compile Include="Response\BindingFailedHeyResponse.cs" />
+    <Compile Include="Response\OkHeyResponse.cs" />
     <Compile Include="Response\MethodNotFoundHeyResponse.cs" />
     <Compile Include="Response\ParametersErrorHeyResponse.cs" />
     <Compile Include="Exceptions\ThisObjectIsAPrototypeException.cs" />
     <Compile Include="Service\BackgroundJobService.cs" />
+    <Compile Include="Schedules\BackgroundScheduleType.cs" />
     <Compile Include="Service\Concrete\ResolveServiceByAssembly.cs" />
+    <Compile Include="Service\DelayedJobService.cs" />
+    <Compile Include="Schedules\DelayedScheduleType.cs" />
     <Compile Include="Service\HangfireHeyService.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HeyController.cs" />
@@ -174,8 +178,8 @@
     <Compile Include="HangfireDashboardStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Concrete\IServiceResolver.cs" />
-    <Compile Include="Response\RecurringHeyResponse.cs" />
     <Compile Include="Service\RecurringJobService.cs" />
+    <Compile Include="Schedules\RecurringScheduleType.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

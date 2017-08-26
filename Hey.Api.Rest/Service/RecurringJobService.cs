@@ -1,9 +1,11 @@
 using Hey.Api.Rest.Response;
+using Hey.Api.Rest.Schedules;
+using Hey.Api.Rest.Service.Concrete;
 using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service
 {
-    public class RecurringJobService
+    public class RecurringJobService : IHangfireService
     {
         private readonly HeyRememberDto _heyRemember;
         private readonly IResolveMethod _resolveMethod;
@@ -17,7 +19,7 @@ namespace Hey.Api.Rest.Service
         public IHeyResponse CreateNewResponse()
         {
             IMethodBinder methodBinder = _resolveMethod.Find(_heyRemember);
-            return new HeyResponseFactory(methodBinder).Make(RecurringHeyResponse.MakePrototype());
+            return new HeyResponseFactory(methodBinder).Make(RecurringScheduleType.MakePrototype());
         }
     }
 }

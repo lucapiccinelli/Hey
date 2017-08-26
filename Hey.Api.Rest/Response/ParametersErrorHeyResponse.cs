@@ -14,14 +14,9 @@ namespace Hey.Api.Rest.Response
             ParamNum = paramNum;
         }
 
-        public IHttpActionResult Execute(ApiController controller, HeyRememberDto heyRemember)
+        public IHttpActionResult Execute(ApiController controller)
         {
             throw new NotImplementedException();
-        }
-
-        public IHeyResponse Prototype(IMethodBinder methodBinder)
-        {
-            return new ParametersErrorHeyResponse(ParamNum);
         }
     }
 }

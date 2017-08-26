@@ -42,7 +42,7 @@ namespace Hey.Api.Rest.Controllers
         public IHttpActionResult Post([FromBody]HeyRememberDto heyRemember)
         {
             IHeyResponse heyResponse = _heyService.Handle(heyRemember);
-            return heyResponse.Execute(this, heyRemember);
+            return heyResponse.Execute(this);
         }
 
         // PUT: api/Hey/5
