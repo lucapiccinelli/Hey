@@ -36,7 +36,7 @@ namespace Hey.Api.Rest.Tests
             
         }
 
-        public IHeyResponse CreateNewTask()
+        public IHeyResponse CreateNewResponse()
         {
             return null;
         }

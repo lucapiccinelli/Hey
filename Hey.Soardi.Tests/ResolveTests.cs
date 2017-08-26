@@ -17,15 +17,15 @@ namespace Hey.Soardi.Tests
         [Test]
         public void EnsureThatNoteVeicoloSenderCanBeResolvedAndBinded()
         {
-            BackgroundJobService service = new BackgroundJobService(new HeyRememberDto()
-            {
-                Domain = "Hey.Soardi",
-                Type = "Mail",
-                Id = "Note",
-                DomainSpecificData = "[1, \"banana\"]"
-            });
+            //BackgroundJobService service = new BackgroundJobService(new HeyRememberDto()
+            //{
+            //    Domain = "Hey.Soardi",
+            //    Type = "Mail",
+            //    Id = "Note",
+            //    DomainSpecificData = "[1, \"banana\"]"
+            //});
 
-            service.CreateNewTask();
+            //service.CreateNewResponse();
         }
     }
 }

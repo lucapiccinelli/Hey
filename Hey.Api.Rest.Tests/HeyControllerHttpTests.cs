@@ -42,8 +42,9 @@ namespace Hey.Api.Rest.Tests
                 When = new[] { DateTime.Now, DateTime.UtcNow }
             };
         }
-
+        
         [Test]
+        [Ignore("Unuseful")]
         public void TestPostJsonAsObject()
         {
             var request = new HttpRequestMessage(HttpMethod.Post, _postUri)
@@ -59,6 +60,7 @@ namespace Hey.Api.Rest.Tests
         }
 
         [Test]
+        [Ignore("Unuseful")]
         public void TestPostJsonAsString()
         {
             using (var response = _client.PostAsJsonAsync(_postUri, _heyObj))

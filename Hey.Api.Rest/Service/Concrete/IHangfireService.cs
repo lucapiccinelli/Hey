@@ -2,6 +2,6 @@
 {
     public interface IHangfireService
     {
-        IHeyResponse CreateNewTask();
+        IHeyResponse CreateNewResponse();
     }
 }

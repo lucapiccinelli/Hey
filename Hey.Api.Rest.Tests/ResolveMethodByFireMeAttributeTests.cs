@@ -16,47 +16,34 @@ namespace Hey.Api.Rest.Tests
         public void TestThatTheResolverCanFindTheFireMeMethod()
         {
             ResolveMethodByFireMeAttribute resolver = new ResolveMethodByFireMeAttribute();
-            MethodInfo method = resolver.Find(new HeyRememberDto()
+            IMethodBinder method = resolver.Find(new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
                 Type = "",
-                Id = "Test"
+                Id = "BindMe"
             });
-
-            Assert.NotNull(method);
+            
             Assert.AreEqual(method.Name, nameof(ResolveMethodByFireMeAttributeTestClass.RetrieveMe));
         }
 
         [Test]
-        public void TestThatTheResolverDoesNotThrowWhenHeCantFindTheMethod()
+        public void TestThatTheResolverReturnCorrectlyWhenCantFindTheMethod()
         {
             ResolveMethodByFireMeAttribute resolver = new ResolveMethodByFireMeAttribute();
-            Assert.DoesNotThrow(() => resolver.Find(new HeyRememberDto()
+            IMethodBinder method = resolver.Find(new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
                 Type = "",
-                Id = "NotValid"
-            }));
-        }
-
-        [Test]
-        public void TestThatWhenTheResolverCantFindTheFireMeMethodTheResultIsNull()
-        {
-            ResolveMethodByFireMeAttribute resolver = new ResolveMethodByFireMeAttribute();
-            MethodInfo method = resolver.Find(new HeyRememberDto()
-            {
-                Domain = "Hey.Api.Rest.Tests",
-                Type = "",
-                Id = "NotValid"
+                Id = "ThisMethodDoesntExists"
             });
 
-            Assert.IsNull(method);
+            Assert.AreEqual(MethodExecutionResultEnum.Empty, method.Invoke());
         }
     }
 
     internal class ResolveMethodByFireMeAttributeTestClass
     {
-        [FireMe("Test")]
+        [FireMe("BindMe")]
         public void RetrieveMe()
         {
             

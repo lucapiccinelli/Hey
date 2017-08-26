@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Description;
 using Hangfire;
+using Hangfire.Storage;
 using Hey.Api.Rest.Service;
 using Hey.Core.Models;
 
@@ -26,10 +27,14 @@ namespace Hey.Api.Rest.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET: api/Hey/5
-        public string Get(int id)
+        // GET: api/Hey/Id
+        [ResponseType(typeof(List<RecurringJobDto>))]
+        public IEnumerable<RecurringJobDto> Get(string id)
         {
-            return "value";
+            List<RecurringJobDto> recurringJobs = JobStorage.Current.GetConnection().GetRecurringJobs();
+            List<RecurringJobDto> filteredRecurringJobs = recurringJobs.FindAll(dto => dto.Id.StartsWith(id));
+
+            return filteredRecurringJobs;
         }
 
         // POST: api/Hey
@@ -37,7 +42,7 @@ namespace Hey.Api.Rest.Controllers
         public IHttpActionResult Post([FromBody]HeyRememberDto heyRemember)
         {
             IHeyResponse heyResponse = _heyService.Handle(heyRemember);
-            return CreatedAtRoute("DefaultApi", new {id = heyRemember.Id}, heyRemember);
+            return heyResponse.Execute(this, heyRemember);
         }
 
         // PUT: api/Hey/5

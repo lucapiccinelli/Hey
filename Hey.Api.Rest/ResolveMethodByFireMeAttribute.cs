@@ -1,15 +1,22 @@
 using System;
 using System.Linq;
 using System.Reflection;
+using Hey.Api.Rest.Exceptions;
 using Hey.Core.Attributes;
 using Hey.Core.Models;
 
 namespace Hey.Api.Rest
 {
-    public class ResolveMethodByFireMeAttribute
+    public class ResolveMethodByFireMeAttribute : IResolveMethod
     {
+        private readonly IHeyExceptionHandler _exceptionHandler;
 
-        public MethodInfo Find(HeyRememberDto heyRemember)
+        public ResolveMethodByFireMeAttribute(IHeyExceptionHandler exceptionHandler = null)
+        {
+            _exceptionHandler = exceptionHandler;
+        }
+
+        public IMethodBinder Find(HeyRememberDto heyRemember)
         {
             var assembly = Assembly.Load($"{heyRemember.Domain}");
             string myNamespace = $"{heyRemember.Domain}" +
@@ -22,10 +29,12 @@ namespace Hey.Api.Rest
                 .SelectMany(t => t.GetMethods())
                 .FirstOrDefault(m => HasAttribute(m) && m.GetCustomAttribute<FireMeAttribute>().Id == heyRemember.Id);
 
-            return fireMeMethod;
+            return fireMeMethod != null
+                ? (IMethodBinder) new MethodBinder(fireMeMethod, heyRemember, _exceptionHandler)
+                : new MethodNotFound(heyRemember);
         }
 
-        public bool HasAttribute(MethodInfo m)
+        private bool HasAttribute(MethodInfo m)
         {
             try
             {

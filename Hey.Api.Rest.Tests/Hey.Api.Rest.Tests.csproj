@@ -61,6 +61,7 @@
     <Compile Include="HangfireHeyServiceTests.cs" />
     <Compile Include="HeyControllerHttpRealTests.cs" />
     <Compile Include="HeyControllerHttpTests.cs" />
+    <Compile Include="HeyResponseFactoryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ResolveMethodByFireMeAttributeTests.cs" />
     <Compile Include="ResolveServiceByAssemblyTests.cs" />
