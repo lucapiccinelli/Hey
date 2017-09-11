@@ -59,5 +59,10 @@ namespace Hey.Api.Rest.Controllers
         {
             return CreatedAtRoute(routeName, routeValues, content);
         }
+
+        public IHttpActionResult ExposedBadRequest(string message)
+        {
+            return BadRequest(message);
+        }
     }
 }

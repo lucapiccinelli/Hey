@@ -15,7 +15,7 @@ namespace Hey.Api.Rest.Tests
     [TestFixture]
     class HeyControllerHttpRealTests
     {
-        [Ignore("To launch by hand, only if the web service is running")]
+        //[Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task TestPostJsonOnARealHttpCommunication()
         {
@@ -25,8 +25,8 @@ namespace Hey.Api.Rest.Tests
                 Domain = "Hey.Soardi",
                 Type = "Mail",
                 Id = "Note",
-                When = new []{DateTime.Now, DateTime.UtcNow},
-                DomainSpecificData = "[1, \"banana\"]"
+                When = new []{DateTime.Now + TimeSpan.FromSeconds(60), DateTime.UtcNow},
+                DomainSpecificData = "[10343, \"luca.picci@gmail.com\"]"
             };
             string id = HttpUtility.UrlEncode(heyObj.DomainSpecificData);
             
@@ -34,7 +34,23 @@ namespace Hey.Api.Rest.Tests
             using (var response = await client.PostAsJsonAsync("http://localhost:60402/api/Hey", heyObj))
             {
                 Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
-                Assert.AreEqual($"http://localhost:60402/api/Hey/Hey.Soardi/Mail/Note/{id}", response.Headers.Location.AbsoluteUri);
+            }
+        }
+
+        [Ignore("To launch by hand, only if the web service is running")]
+        [Test]
+        public async Task WhenTheDomainCantBeFoundAsAnAssemblyMustReturnBadRequest()
+        {
+            var client = new HttpClient();
+            var heyObj = new HeyRememberDto()
+            {
+                Domain = "Hey.Banana",
+            };
+
+
+            using (var response = await client.PostAsJsonAsync("http://localhost:60402/api/Hey", heyObj))
+            {
+                Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
             }
         }
     }
