@@ -54,5 +54,10 @@ namespace Hey.Api.Rest.Controllers
         public void Delete(int id)
         {
         }
+
+        public IHttpActionResult ExposedCreatedAtRoute<T>(string routeName, object routeValues, T content)
+        {
+            return CreatedAtRoute(routeName, routeValues, content);
+        }
     }
 }

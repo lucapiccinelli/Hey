@@ -53,7 +53,7 @@ namespace Hey.Api.Rest.Tests
         }
 
         [Test]
-        public async Task TestThatWhenTheJobIsScheduledItIsReturnedTheCorrectHttpPath()
+        public void TestThatWhenTheJobIsScheduledItIsReturnedTheCorrectHttpPath()
         {
             Mock<IMethodBinder> methodBinderMock = new Mock<IMethodBinder>();
             methodBinderMock
@@ -68,28 +68,24 @@ namespace Hey.Api.Rest.Tests
                 .Setup(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()))
                 .Returns("banana");
 
-            HeyController controller = new HeyController(new Mock<IHeyService>().Object);
-            controller.Request = _httpRequestMessage;
-            controller.Configuration = _httpConfiguration;
-
             OkHeyResponse response = new OkHeyResponse(methodBinderMock.Object, scheduleTypeMock.Object);
-            IHttpActionResult result = response.Execute(controller);
+            var serviceMock = new Mock<IHeyService>();
+            serviceMock
+                .Setup(service => service.Handle(_heyObj))
+                .Returns(response);
+
+            HeyController controller = new HeyController(serviceMock.Object)
+            {
+                Request = _httpRequestMessage,
+                Configuration = _httpConfiguration
+            };
+            IHttpActionResult result = controller.Post(_heyObj);
 
             Assert.IsInstanceOf<CreatedAtRouteNegotiatedContentResult<HeyRememberDto>>(result);
+            var createdAtResult = result as CreatedAtRouteNegotiatedContentResult<HeyRememberDto>;
 
-            UrlHelper urlHelper = new UrlHelper(_httpRequestMessage);
-
-            using (var httpResponse = await result.ExecuteAsync(CancellationToken.None))
-            {
-                Assert.AreEqual(
-                    "http://localhost:60402/api/Hey/TestDomain/TestType/TestId/banana",
-                    httpResponse.Headers.Location.ToString());
-            }
-
-            //var concreteResult = (CreatedAtRouteNegotiatedContentResult<HeyRememberDto>)result;
-            //Assert.AreEqual(
-            //    "http://localhost:60402/api/Hey/TestDomain/TestType/TestId/banana",
-            //    urlHelper.Link(concreteResult.RouteName, concreteResult.RouteValues));
+            Assert.AreEqual("DefaultApi", createdAtResult.RouteName);
+            Assert.AreEqual("TestDomain/TestType/TestId/banana", createdAtResult.RouteValues["id"]);
         }
     }
 }

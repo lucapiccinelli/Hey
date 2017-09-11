@@ -1,3 +1,6 @@
+using System.Web;
+using Hangfire;
+
 namespace Hey.Api.Rest.Schedules
 {
     public class RecurringScheduleType : IScheduleType
@@ -14,7 +17,9 @@ namespace Hey.Api.Rest.Schedules
 
         public string Schedule(HeyRememberDeferredExecution deferredExecution)
         {
-            throw new System.NotImplementedException();
+            string id = HttpUtility.UrlEncode(deferredExecution.HeyRemember.DomainSpecificData.Normalize());
+            RecurringJob.AddOrUpdate(id, () => deferredExecution.Execute(deferredExecution.HeyRemember), Cron.Minutely);
+            return id;
         }
     }
 }
