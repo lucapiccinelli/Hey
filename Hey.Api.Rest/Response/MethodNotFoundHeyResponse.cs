@@ -8,9 +8,16 @@ namespace Hey.Api.Rest.Response
 {
     public class MethodNotFoundHeyResponse : IHeyResponse
     {
+        private readonly HeyRememberDto _heyRemember;
+
+        public MethodNotFoundHeyResponse(HeyRememberDto heyRemember)
+        {
+            _heyRemember = heyRemember;
+        }
+
         public IHttpActionResult Execute(HeyController controller)
         {
-            throw new NotImplementedException();
+            return controller.ExposedBadRequest($"{_heyRemember.Id} not found in {_heyRemember.Domain}\\{_heyRemember.Type}");
         }
     }
 }

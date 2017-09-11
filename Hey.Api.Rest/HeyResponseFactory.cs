@@ -22,7 +22,7 @@ namespace Hey.Api.Rest
 
             if (binderCanCall.ExecutionResultEnum == MethodExecutionResultEnum.Empty)
             {
-                return new MethodNotFoundHeyResponse();
+                return new MethodNotFoundHeyResponse(_methodBinder.CreateDeferredExecution().HeyRemember);
             }
             if (!binderCanCall.ParametersOk)
             {
