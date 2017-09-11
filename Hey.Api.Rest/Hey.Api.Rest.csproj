@@ -161,10 +161,8 @@
     <Compile Include="Response\MethodNotFoundHeyResponse.cs" />
     <Compile Include="Response\ParametersErrorHeyResponse.cs" />
     <Compile Include="Exceptions\ThisObjectIsAPrototypeException.cs" />
-    <Compile Include="Service\BackgroundJobService.cs" />
     <Compile Include="Schedules\BackgroundScheduleType.cs" />
     <Compile Include="Service\Concrete\ResolveServiceByAssembly.cs" />
-    <Compile Include="Service\DelayedJobService.cs" />
     <Compile Include="Schedules\DelayedScheduleType.cs" />
     <Compile Include="Service\HangfireHeyService.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -178,7 +176,7 @@
     <Compile Include="HangfireDashboardStartup.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service\Concrete\IServiceResolver.cs" />
-    <Compile Include="Service\RecurringJobService.cs" />
+    <Compile Include="Service\FindMethodService.cs" />
     <Compile Include="Schedules\RecurringScheduleType.cs" />
   </ItemGroup>
   <ItemGroup>

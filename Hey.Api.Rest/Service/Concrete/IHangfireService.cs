@@ -2,6 +2,6 @@
 {
     public interface IHangfireService
     {
-        IHeyResponse CreateNewResponse();
+        IHeyResponse CreateNewResponse(IScheduleType prototype);
     }
 }

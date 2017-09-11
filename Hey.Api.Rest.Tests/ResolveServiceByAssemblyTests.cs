@@ -36,7 +36,7 @@ namespace Hey.Api.Rest.Tests
             
         }
 
-        public IHeyResponse CreateNewResponse()
+        public IHeyResponse CreateNewResponse(IScheduleType protoType)
         {
             return null;
         }
