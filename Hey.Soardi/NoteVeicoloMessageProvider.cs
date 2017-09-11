@@ -21,5 +21,10 @@ namespace Hey.Soardi
                 return nota.Nota;
             }
         }
+
+        public string GetAbstract()
+        {
+            return $"Promemoria della nota numero {_idNota}";
+        }
     }
 }

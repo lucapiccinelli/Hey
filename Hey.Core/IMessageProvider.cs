@@ -3,5 +3,6 @@
     public interface IMessageProvider
     {
         string GetText();
+        string GetAbstract();
     }
 }

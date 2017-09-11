@@ -61,7 +61,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="ConnectionStrings.config" />
+    <Content Include="AppSettings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="ConnectionStrings.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="Model\Carrozzeria.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
       <LastGenOutput>Carrozzeria.designer.cs</LastGenOutput>

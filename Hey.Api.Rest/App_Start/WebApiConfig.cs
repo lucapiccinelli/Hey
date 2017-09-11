@@ -39,7 +39,7 @@ namespace Hey.Api.Rest
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<HangfireHeyService>().As<IHeyService>();
+            builder.RegisterType<HeyService>().As<IHeyService>();
 
             IContainer container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

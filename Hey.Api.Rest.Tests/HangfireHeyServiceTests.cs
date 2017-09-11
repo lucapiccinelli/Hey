@@ -15,7 +15,7 @@ namespace Hey.Api.Rest.Tests
         [Test]
         public void TestHandlingOfARememberRequest()
         {
-            HangfireHeyService service = new HangfireHeyService();
+            HeyService service = new HeyService();
         }
     }
 }

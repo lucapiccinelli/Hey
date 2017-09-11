@@ -4,6 +4,6 @@ namespace Hey.Api.Rest.Service
 {
     public interface IHeyService
     {
-        IHeyResponse Handle(HeyRememberDto heyRemember);
+        IHeyResponse Create(HeyRememberDto heyRemember);
     }
 }

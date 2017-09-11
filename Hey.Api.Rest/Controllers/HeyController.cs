@@ -41,7 +41,7 @@ namespace Hey.Api.Rest.Controllers
         [ResponseType(typeof(HeyRememberDto))]
         public IHttpActionResult Post([FromBody]HeyRememberDto heyRemember)
         {
-            IHeyResponse heyResponse = _heyService.Handle(heyRemember);
+            IHeyResponse heyResponse = _heyService.Create(heyRemember);
             return heyResponse.Execute(this);
         }
 

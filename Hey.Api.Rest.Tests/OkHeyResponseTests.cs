@@ -71,7 +71,7 @@ namespace Hey.Api.Rest.Tests
             OkHeyResponse response = new OkHeyResponse(methodBinderMock.Object, scheduleTypeMock.Object);
             var serviceMock = new Mock<IHeyService>();
             serviceMock
-                .Setup(service => service.Handle(_heyObj))
+                .Setup(service => service.Create(_heyObj))
                 .Returns(response);
 
             HeyController controller = new HeyController(serviceMock.Object)

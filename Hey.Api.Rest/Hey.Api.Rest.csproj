@@ -164,7 +164,7 @@
     <Compile Include="Schedules\BackgroundScheduleType.cs" />
     <Compile Include="Service\Concrete\ResolveServiceByAssembly.cs" />
     <Compile Include="Schedules\DelayedScheduleType.cs" />
-    <Compile Include="Service\HangfireHeyService.cs" />
+    <Compile Include="Service\HeyService.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\HeyController.cs" />
     <Compile Include="Service\Concrete\IHangfireService.cs" />

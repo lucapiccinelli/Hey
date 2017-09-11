@@ -6,16 +6,16 @@ using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service
 {
-    public class HangfireHeyService : IHeyService
+    public class HeyService : IHeyService
     {
         private readonly IHeyExceptionHandler _exceptionHandler;
 
-        public HangfireHeyService(IHeyExceptionHandler exceptionHandler = null)
+        public HeyService(IHeyExceptionHandler exceptionHandler = null)
         {
             _exceptionHandler = exceptionHandler;
         }
 
-        public IHeyResponse Handle(HeyRememberDto heyRemember)
+        public IHeyResponse Create(HeyRememberDto heyRemember)
         {
             return new FindMethodService(heyRemember, new ResolveMethodByFireMeAttribute(_exceptionHandler))
                 .CreateNewResponse(DelayedScheduleType.MakePrototype());
