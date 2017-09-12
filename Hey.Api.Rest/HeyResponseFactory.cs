@@ -28,9 +28,9 @@ namespace Hey.Api.Rest
             }
             if (!binderCanCall.ParametersOk)
             {
-                return new ParametersErrorHeyResponse(binderCanCall.ParametersOkNum);
+                return new ParametersErrorHeyResponse(heyRemember, binderCanCall.ParametersOkNum);
             }
-            return new BindingFailedHeyResponse();
+            return new BindingFailedHeyResponse(heyRemember);
         }
     }
 }

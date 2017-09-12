@@ -8,9 +8,16 @@ namespace Hey.Api.Rest.Response
 {
     public class BindingFailedHeyResponse : IHeyResponse
     {
+        private readonly HeyRememberDto _heyRemember;
+
+        public BindingFailedHeyResponse(HeyRememberDto heyRemember)
+        {
+            _heyRemember = heyRemember;
+        }
+
         public IHttpActionResult Execute(HeyController controller)
         {
-            throw new NotImplementedException();
+            return controller.ExposedBadRequest($"heyRember request {_heyRemember} can't be binded to any method for an unknown reason");
         }
     }
 }

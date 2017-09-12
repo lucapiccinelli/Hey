@@ -21,7 +21,7 @@ using NUnit.Framework;
 namespace Hey.Api.Rest.Tests
 {
     [TestFixture]
-    public class HeyControllerHttpTests
+    public class HeyControllerTests
     {
         private HeyController _heyController;
         private Mock<IScheduleType> _scheduleTypeMock;
@@ -93,7 +93,8 @@ namespace Hey.Api.Rest.Tests
             HeyRememberDto heyObj = new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
-                Id = "Test"
+                Id = "Test",
+                DomainSpecificData = $"[{JsonConvert.SerializeObject(DateTime.Now)}, \"abc\"]"
             };
 
             var scheduleTypeMock = new Mock<IScheduleType>();
@@ -121,18 +122,34 @@ namespace Hey.Api.Rest.Tests
             HeyRememberDto heyObj = new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
-                Id = "Test"
+                Id = "Test",
+                DomainSpecificData = $"[{JsonConvert.SerializeObject(DateTime.Now)}, \"abc\"]"
             };
 
             var response = _heyController.Post(heyObj);
             Assert.IsInstanceOf<CreatedAtRouteNegotiatedContentResult<HeyRememberDto>>(response);
             _scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()));
         }
+
+        [Test]
+        public void TestPostCantMatchMethodArguments()
+        {
+            HeyRememberDto heyObj = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest.Tests",
+                Id = "Test",
+                DomainSpecificData = $"[{JsonConvert.SerializeObject(DateTime.Now)}, 1]"
+            };
+
+            var response = _heyController.Post(heyObj);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+            _scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()), Times.Never);
+        }
     }
 
     public class HttpTestClass
     {
         [FireMe("Test")]
-        public void FindMeMethod() { }
+        public void FindMeMethod(DateTime d, string s) { }
     }
 }
