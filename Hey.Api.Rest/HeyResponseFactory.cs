@@ -1,5 +1,6 @@
 ﻿using Hey.Api.Rest.Response;
 using Hey.Api.Rest.Service;
+using Hey.Core.Models;
 
 namespace Hey.Api.Rest
 {
@@ -14,6 +15,7 @@ namespace Hey.Api.Rest
 
         public IHeyResponse Make(IScheduleType prototype)
         {
+            HeyRememberDto heyRemember = _methodBinder.CreateDeferredExecution().HeyRemember;
             BinderCanCallTheMethod binderCanCall = new BinderCanCallTheMethod(_methodBinder);
             if (binderCanCall.Can)
             {
@@ -22,7 +24,7 @@ namespace Hey.Api.Rest
 
             if (binderCanCall.ExecutionResultEnum == MethodExecutionResultEnum.Empty)
             {
-                return new MethodNotFoundHeyResponse(_methodBinder.CreateDeferredExecution().HeyRemember);
+                return new MethodNotFoundHeyResponse(heyRemember);
             }
             if (!binderCanCall.ParametersOk)
             {

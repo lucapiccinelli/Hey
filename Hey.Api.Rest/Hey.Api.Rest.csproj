@@ -152,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BinderCanCallTheMethod.cs" />
+    <Compile Include="Exceptions\DeferredExecutionException.cs" />
     <Compile Include="Exceptions\LogExceptionHandler.cs" />
     <Compile Include="HeyInvokeMethod.cs" />
     <Compile Include="HeyRememberDeferredExecution.cs" />

@@ -8,6 +8,7 @@ using Hey.Api.Rest.Controllers;
 using Hey.Api.Rest.Exceptions;
 using Hey.Api.Rest.Service;
 using Hey.Core.Models;
+using log4net;
 
 namespace Hey.Api.Rest.Response
 {
@@ -15,13 +16,15 @@ namespace Hey.Api.Rest.Response
     {
         private readonly IMethodBinder _methodBinder;
         private readonly IScheduleType _scheduleType;
-        public string HeyId { get; private set; }
+        private ILog _log;
 
 
         public OkHeyResponse(IMethodBinder methodBinder, IScheduleType scheduleType)
         {
             _methodBinder = methodBinder;
             _scheduleType = scheduleType;
+
+            _log = LogManager.GetLogger(GetType());
         }
 
         public IHttpActionResult Execute(HeyController controller)
@@ -30,8 +33,11 @@ namespace Hey.Api.Rest.Response
             HeyRememberDto heyRemember = deferredExecution.HeyRemember;
 
             string jobId = _scheduleType.Schedule(deferredExecution);
-            HeyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Id}/{jobId}";
-            return controller.ExposedCreatedAtRoute("DefaultApi", new { id = HeyId }, heyRemember);
+            string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Id}/{jobId}";
+
+            _log.Info($"{heyRemember} scheduled on {heyId}");
+
+            return controller.ExposedCreatedAtRoute("DefaultApi", new { id = heyId }, heyRemember);
         }
     }
 }

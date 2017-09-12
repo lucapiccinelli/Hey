@@ -28,7 +28,7 @@ namespace Hey.Api.Rest.Service
                 if (_exceptionHandler != null)
                 {
                     _exceptionHandler.Handle(ex);
-                    return new ErrorHeyResponse(ex);
+                    return new ErrorHeyResponse(ex, heyRemember);
                 }
                 else
                 {

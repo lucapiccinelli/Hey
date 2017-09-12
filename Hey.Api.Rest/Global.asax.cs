@@ -23,6 +23,7 @@ namespace Hey.Api.Rest
 
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<LogExceptionHandler>().As<IHeyExceptionHandler>();
+            builder.RegisterType<HeyRememberDeferredExecution>();
 
             HangfireGlobalConfiguration.Configuration
                 .UseAutofacActivator(builder.Build())
