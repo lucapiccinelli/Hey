@@ -25,7 +25,7 @@ namespace Hey.Api.Rest.Tests
                 Domain = "Hey.Soardi",
                 Type = "Mail",
                 Id = "Note",
-                When = new []{DateTime.Now + TimeSpan.FromSeconds(60), DateTime.UtcNow},
+                When = new[] { DateTime.Now + TimeSpan.FromSeconds(60), DateTime.UtcNow },
                 DomainSpecificData = "[10343, \"luca.picci@gmail.com\"]"
             };
             string id = HttpUtility.UrlEncode(heyObj.DomainSpecificData);

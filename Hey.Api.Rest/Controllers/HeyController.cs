@@ -38,6 +38,7 @@ namespace Hey.Api.Rest.Controllers
         }
 
         // POST: api/Hey
+        [ResponseType(typeof(HeyRememberDto))]
         public IHttpActionResult Post([FromBody]HeyRememberDto heyRemember)
         {
             IHeyResponse heyResponse = _heyService.Create(heyRemember);
@@ -54,16 +55,19 @@ namespace Hey.Api.Rest.Controllers
         {
         }
 
+        [NonAction]
         public IHttpActionResult ExposedCreatedAtRoute<T>(string routeName, object routeValues, T content)
         {
             return CreatedAtRoute(routeName, routeValues, content);
         }
 
+        [NonAction]
         public IHttpActionResult ExposedBadRequest(string message)
         {
             return BadRequest(message);
         }
 
+        [NonAction]
         public IHttpActionResult ExposedInternalServerError(Exception ex)
         {
             return InternalServerError(ex);

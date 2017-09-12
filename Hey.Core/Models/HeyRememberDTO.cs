@@ -14,10 +14,10 @@ namespace Hey.Core.Models
             DomainSpecificData = string.Empty;
         }
 
-        public override string ToString()
-        {
-            return $"HeyRember {Domain}/{Type}/{Id} on {When}";
-        }
+        //public override string ToString()
+        //{
+        //    return $"HeyRember {Domain}/{Type}/{Id} on {When}";
+        //}
 
         public string Domain { get; set; }
         public string Type { get; set; }
