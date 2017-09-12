@@ -151,6 +151,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\HangFireScheduleFactory.cs" />
     <Compile Include="BinderCanCallTheMethod.cs" />
     <Compile Include="Exceptions\DeferredExecutionException.cs" />
     <Compile Include="Exceptions\LogExceptionHandler.cs" />
@@ -189,6 +190,7 @@
     <Compile Include="Service\Concrete\IServiceResolver.cs" />
     <Compile Include="Service\FindMethodService.cs" />
     <Compile Include="Schedules\RecurringScheduleType.cs" />
+    <Compile Include="IScheduleTypeFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

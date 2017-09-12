@@ -45,6 +45,7 @@ namespace Hey.Api.Rest
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
             builder.RegisterType<LogExceptionHandler>().As<IHeyExceptionHandler>();
+            builder.RegisterType<HangFireScheduleFactory>().As<IScheduleTypeFactory>();
             builder.RegisterType<HeyService>().As<IHeyService>();
 
             IContainer container = builder.Build();

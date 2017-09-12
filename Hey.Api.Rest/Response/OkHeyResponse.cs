@@ -29,15 +29,22 @@ namespace Hey.Api.Rest.Response
 
         public IHttpActionResult Execute(HeyController controller)
         {
-            HeyRememberDeferredExecution deferredExecution = _methodBinder.CreateDeferredExecution();
-            HeyRememberDto heyRemember = deferredExecution.HeyRemember;
+            try
+            {
+                HeyRememberDeferredExecution deferredExecution = _methodBinder.CreateDeferredExecution();
+                HeyRememberDto heyRemember = deferredExecution.HeyRemember;
 
-            string jobId = _scheduleType.Schedule(deferredExecution);
-            string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Id}/{jobId}";
+                string jobId = _scheduleType.Schedule(deferredExecution);
+                string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Id}/{jobId}";
 
-            _log.Info($"{heyRemember} scheduled on {heyId}");
+                _log.Info($"{heyRemember} scheduled on {heyId}");
 
-            return controller.ExposedCreatedAtRoute("DefaultApi", new { id = heyId }, heyRemember);
+                return controller.ExposedCreatedAtRoute("DefaultApi", new { id = heyId }, heyRemember);
+            }
+            catch (Exception ex)
+            {
+                return controller.ExposedInternalServerError(ex);
+            }
         }
     }
 }

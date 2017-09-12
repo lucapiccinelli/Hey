@@ -9,10 +9,12 @@ namespace Hey.Api.Rest.Service
 {
     public class HeyService : IHeyService
     {
+        private readonly IScheduleTypeFactory _scheduleFactory;
         private readonly IHeyExceptionHandler _exceptionHandler;
 
-        public HeyService(IHeyExceptionHandler exceptionHandler = null)
+        public HeyService(IScheduleTypeFactory scheduleFactory, IHeyExceptionHandler exceptionHandler = null)
         {
+            _scheduleFactory = scheduleFactory;
             _exceptionHandler = exceptionHandler;
         }
 
@@ -21,7 +23,7 @@ namespace Hey.Api.Rest.Service
             try
             {
                 return new FindMethodService(heyRemember, new ResolveMethodByFireMeAttribute(_exceptionHandler))
-                    .CreateNewResponse(DelayedScheduleType.MakePrototype());
+                    .CreateNewResponse(_scheduleFactory.MakeAPrototype(heyRemember));
             }
             catch (Exception ex)
             {

@@ -23,7 +23,7 @@ namespace Hey.Api.Rest.Response
         public IHttpActionResult Execute(HeyController controller)
         {
             _log.Error($"{_heyRemember}: error processing this request");
-            return controller.ExposedBadRequest(_exception.Message);
+            return controller.ExposedInternalServerError(_exception);
         }
     }
 }

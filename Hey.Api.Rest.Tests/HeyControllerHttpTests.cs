@@ -4,8 +4,15 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Results;
+using Hey.Api.Rest.Controllers;
+using Hey.Api.Rest.Exceptions;
+using Hey.Api.Rest.Response;
 using Hey.Api.Rest.Service;
+using Hey.Core.Attributes;
 using Hey.Core.Models;
 using Moq;
 using Newtonsoft.Json;
@@ -16,58 +23,116 @@ namespace Hey.Api.Rest.Tests
     [TestFixture]
     public class HeyControllerHttpTests
     {
-        private HttpConfiguration _httpConfiguration;
-        private HttpServer _server;
-        private HttpClient _client;
-        private string _postUri;
-        private HeyRememberDto _heyObj;
+        private HeyController _heyController;
+        private Mock<IScheduleType> _scheduleTypeMock;
+        private Mock<IScheduleTypeFactory> _scheduleTypeFactoryMock;
 
         [SetUp]
         public void SetUp()
         {
-            _httpConfiguration = new HttpConfiguration();
-            WebApiConfig.Register(_httpConfiguration);
-            WebApiConfig.RegisterDependencies(_httpConfiguration, new Mock<IHeyService>().Object);
+            _scheduleTypeMock = new Mock<IScheduleType>();
+            _scheduleTypeMock
+                .Setup(type => type.Prototype())
+                .Returns(_scheduleTypeMock.Object);
+            _scheduleTypeMock
+                .Setup(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()))
+                .Returns("Mock");
 
-            _server = new HttpServer(_httpConfiguration);
-            _client = new HttpClient(_server);
+            _scheduleTypeFactoryMock = new Mock<IScheduleTypeFactory>();
+            _scheduleTypeFactoryMock
+                .Setup(factory => factory.MakeAPrototype(It.IsAny<HeyRememberDto>()))
+                .Returns(_scheduleTypeMock.Object);
 
-            _postUri = "http://localhost/api/Hey";
-
-            _heyObj = new HeyRememberDto()
-            {
-                Domain = "Test",
-                Type = "Post",
-                Id = "1",
-                When = new[] { DateTime.Now, DateTime.UtcNow }
-            };
-        }
-        
-        [Test]
-        [Ignore("Unuseful")]
-        public void TestPostJsonAsObject()
-        {
-            var request = new HttpRequestMessage(HttpMethod.Post, _postUri)
-            {
-                Content = new ObjectContent(typeof(HeyRememberDto), _heyObj, new JsonMediaTypeFormatter())
-            };
-
-            using (var response = _client.SendAsync(request))
-            {
-                Assert.AreEqual(HttpStatusCode.Created, response.Result.StatusCode);
-                Assert.AreEqual("http://localhost/api/Hey/1", response.Result.Headers.Location.ToString());
-            }
+            _heyController = new HeyController(new HeyService(_scheduleTypeFactoryMock.Object, new LogExceptionHandler()));
         }
 
         [Test]
-        [Ignore("Unuseful")]
-        public void TestPostJsonAsString()
+        public void TestPostCantFindTheAssembly()
         {
-            using (var response = _client.PostAsJsonAsync(_postUri, _heyObj))
+            HeyRememberDto heyObj = new HeyRememberDto()
             {
-                Assert.AreEqual(HttpStatusCode.Created, response.Result.StatusCode);
-                Assert.AreEqual("http://localhost/api/Hey/1", response.Result.Headers.Location.ToString());
-            }
+                Domain = "Banana"
+            };
+            var response = _heyController.Post(heyObj);
+            Assert.IsInstanceOf<ExceptionResult>(response);
+            _scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()), Times.Never);
         }
+
+        [Test]
+        public void TestPostCantFindTheNamespace()
+        {
+            HeyRememberDto heyObj = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest",
+                Type = "Banana"
+            };
+
+            var response = _heyController.Post(heyObj);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+            _scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()), Times.Never);
+        }
+
+        [Test]
+        public void TestPostCantFindTheMethod()
+        {
+            HeyRememberDto heyObj = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest",
+                Type = "Tests",
+                Id = "Banana"
+            };
+
+            var response = _heyController.Post(heyObj);
+            Assert.IsInstanceOf<BadRequestErrorMessageResult>(response);
+            _scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()), Times.Never);
+        }
+
+        [Test]
+        public void TestPostCanFindTheMethodButHangFireIsNotRunning()
+        {
+            HeyRememberDto heyObj = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest.Tests",
+                Id = "Test"
+            };
+
+            var scheduleTypeMock = new Mock<IScheduleType>();
+            scheduleTypeMock
+                .Setup(type => type.Prototype())
+                .Returns(scheduleTypeMock.Object);
+            scheduleTypeMock
+                .Setup(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()))
+                .Throws<Exception>();
+
+            var scheduleTypeFactoryMock = new Mock<IScheduleTypeFactory>();
+            scheduleTypeFactoryMock
+                .Setup(factory => factory.MakeAPrototype(It.IsAny<HeyRememberDto>()))
+                .Returns(scheduleTypeMock.Object);
+
+            var heyController = new HeyController(new HeyService(scheduleTypeFactoryMock.Object, new LogExceptionHandler()));
+            var response = heyController.Post(heyObj);
+            Assert.IsInstanceOf<ExceptionResult>(response);
+            scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()));
+        }
+
+        [Test]
+        public void TestPostCanFindTheMethod()
+        {
+            HeyRememberDto heyObj = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest.Tests",
+                Id = "Test"
+            };
+
+            var response = _heyController.Post(heyObj);
+            Assert.IsInstanceOf<CreatedAtRouteNegotiatedContentResult<HeyRememberDto>>(response);
+            _scheduleTypeMock.Verify(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()));
+        }
+    }
+
+    public class HttpTestClass
+    {
+        [FireMe("Test")]
+        public void FindMeMethod() { }
     }
 }
