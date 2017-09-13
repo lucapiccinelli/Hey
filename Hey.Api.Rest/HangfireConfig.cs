@@ -21,7 +21,7 @@ namespace Hey.Api.Rest
             
             HangfireGlobalConfiguration.Configuration
                 .UseAutofacActivator(builder.Build())
-                .UseColouredConsoleLogProvider()
+                .UseLog4NetLogProvider()
                 .UseSqlServerStorage(dbName);
 
             return new BackgroundJobServer();
