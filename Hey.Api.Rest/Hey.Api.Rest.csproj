@@ -159,6 +159,7 @@
   <ItemGroup>
     <Compile Include="App_Start\HangfireJobRepository.cs" />
     <Compile Include="BinderCanCallTheMethod.cs" />
+    <Compile Include="CreatedHttpReturn.cs" />
     <Compile Include="Exceptions\DeferredExecutionException.cs" />
     <Compile Include="Exceptions\LogExceptionHandler.cs" />
     <Compile Include="HangfireConfig.cs" />
@@ -167,6 +168,7 @@
     <Compile Include="Exceptions\IHeyExceptionHandler.cs" />
     <Compile Include="HeyResponseFactory.cs" />
     <Compile Include="IBoundMethodConsumer.cs" />
+    <Compile Include="IHttpReturnType.cs" />
     <Compile Include="IMethodBinder.cs" />
     <Compile Include="IResolveMethod.cs" />
     <Compile Include="IScheduleType.cs" />
@@ -175,6 +177,8 @@
     <Compile Include="MethodNotFound.cs" />
     <Compile Include="ResolveMethodByFireMeAttribute.cs" />
     <Compile Include="Response\BindingFailedHeyResponse.cs" />
+    <Compile Include="Response\DeletedHeyResponse.cs" />
+    <Compile Include="Response\NotFoundHeyResponse.cs" />
     <Compile Include="Response\OkHeyResponse.cs" />
     <Compile Include="Response\MethodNotFoundHeyResponse.cs" />
     <Compile Include="Response\ParametersErrorHeyResponse.cs" />
@@ -195,6 +199,7 @@
     <Compile Include="Service\FindMethodService.cs" />
     <Compile Include="Schedules\RecurringScheduleType.cs" />
     <Compile Include="IJobRepository.cs" />
+    <Compile Include="UpdatedHttpReturn.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

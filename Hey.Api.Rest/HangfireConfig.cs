@@ -13,7 +13,7 @@ namespace Hey.Api.Rest
 {
     public static class HangfireConfig
     {
-        public static BackgroundJobServer StartHangfire()
+        public static BackgroundJobServer StartHangfire(string dbName)
         {
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<LogExceptionHandler>().As<IHeyExceptionHandler>();
@@ -22,7 +22,7 @@ namespace Hey.Api.Rest
             HangfireGlobalConfiguration.Configuration
                 .UseAutofacActivator(builder.Build())
                 .UseColouredConsoleLogProvider()
-                .UseSqlServerStorage("HeyDb");
+                .UseSqlServerStorage(dbName);
 
             return new BackgroundJobServer();
         }

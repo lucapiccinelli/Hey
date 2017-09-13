@@ -62,7 +62,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HeyControllerGetTests.cs" />
+    <Compile Include="HeyControllerHttpTests.cs" />
+    <Compile Include="HangfireDependentTest.cs" />
     <Compile Include="OkHeyResponseTests.cs" />
     <Compile Include="HeyControllerHttpRealTests.cs" />
     <Compile Include="HeyControllerTests.cs" />

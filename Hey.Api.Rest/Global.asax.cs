@@ -11,7 +11,7 @@ namespace Hey.Api.Rest
         protected void Application_Start()
         {
             WebApiGlobalConfiguration.Configure(WebApiConfig.Initialize);
-            _backgroundJobServer = HangfireConfig.StartHangfire();
+            _backgroundJobServer = HangfireConfig.StartHangfire("TestHeyDb");
         }
 
         protected void Application_End(object sender, EventArgs e)

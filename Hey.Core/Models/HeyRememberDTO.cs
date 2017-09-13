@@ -16,6 +16,19 @@ namespace Hey.Core.Models
             DomainSpecificData = string.Empty;
         }
 
+
+        public HeyRememberDto(HeyRememberDto other)
+        {
+            Domain = other.Domain;
+            Type = other.Type;
+            Name = other.Name;
+            Id = other.Id;
+            When = new DateTime[other.When.Length];
+            other.When.CopyTo(When, 0);
+            DomainSpecificData = other.DomainSpecificData;
+            Recurrent = other.Recurrent;
+        }
+
         public override string ToString()
         {
             return $"HeyRember {Domain}/{Type}/{Name}/{Id} on {When[0]}";

@@ -15,10 +15,16 @@ namespace Hey.Api.Rest.Service
             _resolveMethod = resolveMethod;
         }
 
-        public IHeyResponse CreateNewResponse(IScheduleType prototype)
+        public IHeyResponse CreateNewResponse(IScheduleType schedulePrototype)
         {
             IMethodBinder methodBinder = _resolveMethod.Find(_heyRemember);
-            return new HeyResponseFactory(methodBinder).Make(prototype);
+            return new HeyResponseFactory(methodBinder).Make(schedulePrototype, new CreatedHttpReturn());
+        }
+
+        public IHeyResponse UpdateResponse(IScheduleType schedulePrototype)
+        {
+            IMethodBinder methodBinder = _resolveMethod.Find(_heyRemember);
+            return new HeyResponseFactory(methodBinder).Make(schedulePrototype, new UpdatedHttpReturn());
         }
     }
 }

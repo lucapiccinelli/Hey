@@ -7,5 +7,6 @@ namespace Hey.Api.Rest
     {
         IScheduleType MakeASchedulePrototype(HeyRememberDto heyRemember);
         List<HeyRememberResultDto> GetJobs(string id);
+        void DeleteJobs(List<HeyRememberResultDto> heyRemembers);
     }
 }

@@ -23,7 +23,7 @@ namespace Hey.Api.Rest.Tests
             MethodBinder binder = new MethodBinder(method, new HeyRememberDto());
 
             HeyResponseFactory factory = new HeyResponseFactory(binder);
-            IHeyResponse response = factory.Make(BackgroundScheduleType.MakePrototype());
+            IHeyResponse response = factory.Make(BackgroundScheduleType.MakePrototype(), new CreatedHttpReturn());
 
             Assert.IsInstanceOf<OkHeyResponse>(response);
         }

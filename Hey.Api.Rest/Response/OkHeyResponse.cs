@@ -16,13 +16,15 @@ namespace Hey.Api.Rest.Response
     {
         private readonly IMethodBinder _methodBinder;
         private readonly IScheduleType _scheduleType;
+        private readonly IHttpReturnType _returnType;
         private ILog _log;
 
 
-        public OkHeyResponse(IMethodBinder methodBinder, IScheduleType scheduleType)
+        public OkHeyResponse(IMethodBinder methodBinder, IScheduleType scheduleType, IHttpReturnType returnType)
         {
             _methodBinder = methodBinder;
             _scheduleType = scheduleType;
+            _returnType = returnType;
 
             _log = LogManager.GetLogger(GetType());
         }
@@ -39,7 +41,7 @@ namespace Hey.Api.Rest.Response
 
                 _log.Info($"{heyRemember} scheduled on {heyId}");
 
-                return controller.ExposedCreatedAtRoute("DefaultApi", new { id = heyId }, heyRemember);
+                return _returnType.Return(heyId, heyRemember, controller);
             }
             catch (Exception ex)
             {

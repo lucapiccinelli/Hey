@@ -18,12 +18,14 @@ namespace Hey.Api.Rest.Service
             _exceptionHandler = exceptionHandler;
         }
 
-        public IHeyResponse Create(HeyRememberDto heyRemember)
+        public IHeyResponse Create(HeyRememberDto heyRemember, bool update = false)
         {
             try
             {
-                return new FindMethodService(heyRemember, new ResolveMethodByFireMeAttribute(_exceptionHandler))
-                    .CreateNewResponse(_repository.MakeASchedulePrototype(heyRemember));
+                FindMethodService findService = new FindMethodService(heyRemember, new ResolveMethodByFireMeAttribute(_exceptionHandler));
+                return update 
+                    ? findService.UpdateResponse(_repository.MakeASchedulePrototype(heyRemember))
+                    : findService.CreateNewResponse(_repository.MakeASchedulePrototype(heyRemember));
             }
             catch (Exception ex)
             {
@@ -49,6 +51,38 @@ namespace Hey.Api.Rest.Service
             {
                 _exceptionHandler.Handle(ex);
                 throw;
+            }
+        }
+
+        public IHeyResponse Delete(string id)
+        {
+            return DeleteAnd(id, funid => new DeletedHeyResponse(funid));
+        }
+
+        public IHeyResponse Update(string id, HeyRememberDto heyRemember)
+        {
+            return DeleteAnd(id, funid => Create(heyRemember, update: true));
+        }
+
+        private IHeyResponse DeleteAnd(string id, Func<string, IHeyResponse> actionFunction)
+        {
+            List<HeyRememberResultDto> heyRemembers = Find(id);
+            if (heyRemembers.Count == 0)
+            {
+                return new NotFoundHeyResponse(id);
+            }
+            else
+            {
+                try
+                {
+                    _repository.DeleteJobs(heyRemembers);
+                    return actionFunction.Invoke(id);
+                }
+                catch (Exception ex)
+                {
+                    _exceptionHandler.Handle(ex);
+                    throw;
+                }
             }
         }
     }

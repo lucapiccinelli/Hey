@@ -1,4 +1,5 @@
-﻿using Hey.Api.Rest.Response;
+﻿using System;
+using Hey.Api.Rest.Response;
 using Hey.Api.Rest.Service;
 using Hey.Core.Models;
 
@@ -15,11 +16,16 @@ namespace Hey.Api.Rest
 
         public IHeyResponse Make(IScheduleType prototype)
         {
+            return Make(prototype, new CreatedHttpReturn());
+        }
+
+        public IHeyResponse Make(IScheduleType prototype, IHttpReturnType returnType)
+        {
             HeyRememberDto heyRemember = _methodBinder.CreateDeferredExecution().HeyRemember;
             BinderCanCallTheMethod binderCanCall = new BinderCanCallTheMethod(_methodBinder);
             if (binderCanCall.Can)
             {
-                return new OkHeyResponse(_methodBinder, prototype.Prototype());
+                return new OkHeyResponse(_methodBinder, prototype.Prototype(), returnType);
             }
 
             if (binderCanCall.ExecutionResultEnum == MethodExecutionResultEnum.Empty)

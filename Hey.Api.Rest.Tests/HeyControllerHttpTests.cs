@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Web.Http;
+using System.Web.Http.Results;
 using Hangfire;
-using Hey.Api.Rest.Controllers;
-using Hey.Api.Rest.Service;
 using Hey.Core.Attributes;
 using Hey.Core.Models;
 using NUnit.Framework;
@@ -13,57 +15,111 @@ using NUnit.Framework;
 namespace Hey.Api.Rest.Tests
 {
     [TestFixture()]
-    class HeyControllerHttpTests
+    class HeyControllerHttpTests : HangfireDependentTest
     {
-        private HeyController _heyController;
-        private string _scheduledId;
-        private HeyRememberDto _scheduledHeyRemember;
-        private BackgroundJobServer _backgroundJobServer;
-
-        [SetUp]
-        public void SetUp()
+        [Test, Order(0)]
+        public void TestDeleteOfANotExistingJob()
         {
-            _backgroundJobServer = HangfireConfig.StartHangfire();
-            var repository = new HangfireJobRepository();
-            var heyService = new HeyService(repository);
-            _heyController = new HeyController(heyService);
-
-            _scheduledId = "1";
-            _scheduledHeyRemember = new HeyRememberDto()
-            {
-                Domain = "Hey.Api.Rest.Tests",
-                Name = "GetTests",
-                Id = _scheduledId,
-                DomainSpecificData = "[]",
-                When = new []{DateTime.Now + TimeSpan.FromMinutes(60)}
-            };
-
-            _heyController.Post(_scheduledHeyRemember);
-            repository.Refresh();
+            IHttpActionResult result = _heyController.Delete(_scheduledId);
+            Assert.IsInstanceOf<NotFoundResult>(result);
         }
 
-        [TearDown]
-        public void TearDown()
+        [Test, Order(1)]
+        public void TestUpdateOfANotExistingJob()
         {
-            _backgroundJobServer.Dispose();
+            IHttpActionResult result = _heyController.Put(_scheduledId, _scheduledHeyRemember);
+            Assert.IsInstanceOf<NotFoundResult>(result);
         }
 
-        [Test]
+        [Test, Order(10)]
         public void TestGetOfAScheduledJobById()
         {
+            _heyController.Post(_scheduledHeyRemember);
+            _repository.Refresh();
+
             IEnumerable<HeyRememberResultDto> result = _heyController.Get(_scheduledId);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
             Assert.AreEqual(_scheduledHeyRemember, result.First().HeyRemember);
         }
+
+
+        [Test, Order(11)]
+        public void TestGetOfAFailedJobById()
+        {
+            HttpTestsClass.executed = false;
+            _heyController.Post(_failedHeyRemember);
+            while (!HttpTestsClass.executed) { }
+            Thread.Sleep(1000);
+            _repository.Refresh();
+            IEnumerable<HeyRememberResultDto> result = _heyController.Get(_failedId);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(HeyRememberStatus.Failed, result.First().Status);
+            Assert.AreEqual(_failedHeyRemember, result.First().HeyRemember);
+        }
+
+        [Test, Order(12)]
+        public void TestGetOfAProcessingJobById()
+        {
+            HttpTestsClass.executed = false;
+            _heyController.Post(_processingHeyRemember);
+            while (!HttpTestsClass.executed){}
+            _repository.Refresh();
+            IEnumerable<HeyRememberResultDto> result = _heyController.Get(_processingId);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(HeyRememberStatus.Processing, result.First().Status);
+            Assert.AreEqual(_processingHeyRemember, result.First().HeyRemember);
+        }
+
+        [Test, Order(20)]
+        public void TestUpdateOfAScheduledJob()
+        {
+            HeyRememberDto scheduledCopy = new HeyRememberDto(_scheduledHeyRemember);
+            scheduledCopy.When[0] += TimeSpan.FromMinutes(60);
+            IHttpActionResult resultAction = _heyController.Put(_scheduledId, scheduledCopy);
+            Assert.IsInstanceOf<OkResult>(resultAction);
+
+            _repository.Refresh();
+
+            IEnumerable<HeyRememberResultDto> result = _heyController.Get(_scheduledId);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
+            Assert.AreEqual(scheduledCopy, result.First().HeyRemember);
+        }
+
+        [Test, Order(100)]
+        public void TestDeleteOfAScheduledJobById()
+        {
+            IHttpActionResult result = _heyController.Delete(_scheduledId);
+            Assert.IsInstanceOf<OkResult>(result);
+        }
+
+        [Test, Order(101)]
+        public void TestDeleteOfAFailedJobById()
+        {
+            IHttpActionResult result = _heyController.Delete(_failedId);
+            Assert.IsInstanceOf<OkResult>(result);
+        }
     }
 
-    internal class GetTestsClass
+    internal class HttpTestsClass
     {
+        public static bool executed = false;
+        public static bool done = false;
+
         [FireMe("GetTests")]
         public void MethodToFire()
         {
-            
+            executed = true;
+            Thread.Sleep(2000);
+            done = true;
+        }
+
+        [FireMe("FailTests")]
+        public void FailMethod()
+        {
+            executed = true;
+            throw new Exception("blaaaaaaaaaaaaaaaaaaaaaa");
         }
     }
 }

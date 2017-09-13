@@ -68,10 +68,10 @@ namespace Hey.Api.Rest.Tests
                 .Setup(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()))
                 .Returns("banana");
 
-            OkHeyResponse response = new OkHeyResponse(methodBinderMock.Object, scheduleTypeMock.Object);
+            OkHeyResponse response = new OkHeyResponse(methodBinderMock.Object, scheduleTypeMock.Object, new CreatedHttpReturn());
             var serviceMock = new Mock<IHeyService>();
             serviceMock
-                .Setup(service => service.Create(_heyObj))
+                .Setup(service => service.Create(_heyObj, false))
                 .Returns(response);
 
             HeyController controller = new HeyController(serviceMock.Object)

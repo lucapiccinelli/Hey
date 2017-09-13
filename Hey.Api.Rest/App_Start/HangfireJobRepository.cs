@@ -38,21 +38,21 @@ namespace Hey.Api.Rest
         public List<HeyRememberResultDto> GetJobs(string id)
         {
             List<HeyRememberResultDto> filteredScheduled = _scheduled
-                .Select(pair => (HeyRememberDto)pair.Value.Job.Args[0])
-                .Where(heyRemember => heyRemember.Id == id)
-                .Select(heyRemember => new HeyRememberResultDto(heyRemember, HeyRememberStatus.Scheduled))
+                .Select(pair => new KeyValuePair<string, HeyRememberDto>(pair.Key, (HeyRememberDto)pair.Value.Job.Args[0]))
+                .Where(pair => pair.Value.Id == id)
+                .Select(pair => new HeyRememberResultDto(pair.Key, pair.Value, HeyRememberStatus.Scheduled))
                 .ToList();
 
             List<HeyRememberResultDto> filteredFailed = _failed
-                .Select(pair => (HeyRememberDto)pair.Value.Job.Args[0])
-                .Where(heyRemember => heyRemember.Id == id)
-                .Select(heyRemember => new HeyRememberResultDto(heyRemember, HeyRememberStatus.Failed))
+                .Select(pair => new KeyValuePair<string, HeyRememberDto>(pair.Key, (HeyRememberDto)pair.Value.Job.Args[0]))
+                .Where(pair => pair.Value.Id == id)
+                .Select(pair => new HeyRememberResultDto(pair.Key, pair.Value, HeyRememberStatus.Failed))
                 .ToList();
 
             List<HeyRememberResultDto> filteredProcessing = _processing
-                .Select(pair => (HeyRememberDto)pair.Value.Job.Args[0])
-                .Where(heyRemember => heyRemember.Id == id)
-                .Select(heyRemember => new HeyRememberResultDto(heyRemember, HeyRememberStatus.Processing))
+                .Select(pair => new KeyValuePair<string, HeyRememberDto>(pair.Key, (HeyRememberDto)pair.Value.Job.Args[0]))
+                .Where(pair => pair.Value.Id == id)
+                .Select(pair => new HeyRememberResultDto(pair.Key, pair.Value, HeyRememberStatus.Processing))
                 .ToList();
 
             var jobs = new List<HeyRememberResultDto>();
@@ -61,6 +61,12 @@ namespace Hey.Api.Rest
             jobs.AddRange(filteredProcessing);
 
             return jobs;
+        }
+
+        public void DeleteJobs(List<HeyRememberResultDto> heyRemembers)
+        {
+            heyRemembers
+                .ForEach(heyRemembersResult => BackgroundJob.Delete(heyRemembersResult.JobId));
         }
     }
 }

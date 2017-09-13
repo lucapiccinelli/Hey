@@ -36,13 +36,18 @@ namespace Hey.Api.Rest.Controllers
         }
 
         // PUT: api/Hey/5
-        public void Put(int id, [FromBody]string value)
+        public IHttpActionResult Put(string id, [FromBody]HeyRememberDto heyRemember)
         {
+            heyRemember.Id = id;
+            IHeyResponse heyResponse = _heyService.Update(id, heyRemember);
+            return heyResponse.Execute(this);
         }
 
         // DELETE: api/Hey/5
-        public void Delete(int id)
+        public IHttpActionResult Delete(string id)
         {
+            IHeyResponse heyResponse = _heyService.Delete(id);
+            return heyResponse.Execute(this);
         }
 
         [NonAction]
@@ -61,6 +66,18 @@ namespace Hey.Api.Rest.Controllers
         public IHttpActionResult ExposedInternalServerError(Exception ex)
         {
             return InternalServerError(ex);
+        }
+
+        [NonAction]
+        public IHttpActionResult ExposedNotFound()
+        {
+            return NotFound();
+        }
+
+        [NonAction]
+        public IHttpActionResult ExposedOk()
+        {
+            return Ok();
         }
     }
 }
