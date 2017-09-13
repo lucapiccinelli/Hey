@@ -15,7 +15,7 @@ namespace Hey.Api.Rest.Tests
     [TestFixture]
     class HeyControllerHttpRealTests
     {
-        [Ignore("To launch by hand, only if the web service is running")]
+        //[Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task TestPostJsonOnARealHttpCommunication()
         {
@@ -37,7 +37,7 @@ namespace Hey.Api.Rest.Tests
             }
         }
 
-        [Ignore("To launch by hand, only if the web service is running")]
+        //[Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task WhenTheDomainCantBeFoundAsAnAssemblyMustReturnBadRequest()
         {
