@@ -21,20 +21,10 @@ namespace Hey.Api.Rest.Controllers
             _heyService = heyService;
         }
 
-        // GET: api/Hey
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
         // GET: api/Hey/Id
-        [ResponseType(typeof(List<RecurringJobDto>))]
-        public IEnumerable<RecurringJobDto> Get(string id)
+        public IEnumerable<HeyRememberResultDto> Get(string id)
         {
-            List<RecurringJobDto> recurringJobs = JobStorage.Current.GetConnection().GetRecurringJobs();
-            List<RecurringJobDto> filteredRecurringJobs = recurringJobs.FindAll(dto => dto.Id.StartsWith(id));
-
-            return filteredRecurringJobs;
+            return _heyService.Find(id);
         }
 
         // POST: api/Hey

@@ -21,7 +21,7 @@ namespace Hey.Api.Rest.Response
         public IHttpActionResult Execute(HeyController controller)
         {
             _log.Warn($"{_heyRemember}: method not found");
-            return controller.ExposedBadRequest($"{_heyRemember.Id} not found in {_heyRemember.Domain}\\{_heyRemember.Type}");
+            return controller.ExposedBadRequest($"{_heyRemember.Name} not found in {_heyRemember.Domain}\\{_heyRemember.Type}");
         }
     }
 }

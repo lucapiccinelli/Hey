@@ -1,11 +1,10 @@
 using Hey.Api.Rest.Response;
 using Hey.Api.Rest.Schedules;
-using Hey.Api.Rest.Service.Concrete;
 using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service
 {
-    public class FindMethodService : IHangfireService
+    public class FindMethodService
     {
         private readonly HeyRememberDto _heyRemember;
         private readonly IResolveMethod _resolveMethod;

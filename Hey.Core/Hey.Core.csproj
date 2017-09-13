@@ -47,6 +47,8 @@
   <ItemGroup>
     <Compile Include="Attributes\FireMeAttribute.cs" />
     <Compile Include="Models\HeyRememberDTO.cs" />
+    <Compile Include="Models\HeyRememberResultDto.cs" />
+    <Compile Include="Models\HeyRememberStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\EMailServiceSender.cs" />
     <Compile Include="Services\SendEmailClient.cs" />

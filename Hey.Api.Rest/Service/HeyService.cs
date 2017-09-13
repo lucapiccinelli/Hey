@@ -1,20 +1,20 @@
 ﻿using System;
+using System.Collections.Generic;
 using Hey.Api.Rest.Exceptions;
 using Hey.Api.Rest.Response;
 using Hey.Api.Rest.Schedules;
-using Hey.Api.Rest.Service.Concrete;
 using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Service
 {
     public class HeyService : IHeyService
     {
-        private readonly IScheduleTypeFactory _scheduleFactory;
+        private readonly IJobRepository _repository;
         private readonly IHeyExceptionHandler _exceptionHandler;
 
-        public HeyService(IScheduleTypeFactory scheduleFactory, IHeyExceptionHandler exceptionHandler = null)
+        public HeyService(IJobRepository repository, IHeyExceptionHandler exceptionHandler = null)
         {
-            _scheduleFactory = scheduleFactory;
+            _repository = repository;
             _exceptionHandler = exceptionHandler;
         }
 
@@ -23,7 +23,7 @@ namespace Hey.Api.Rest.Service
             try
             {
                 return new FindMethodService(heyRemember, new ResolveMethodByFireMeAttribute(_exceptionHandler))
-                    .CreateNewResponse(_scheduleFactory.MakeAPrototype(heyRemember));
+                    .CreateNewResponse(_repository.MakeASchedulePrototype(heyRemember));
             }
             catch (Exception ex)
             {
@@ -36,6 +36,19 @@ namespace Hey.Api.Rest.Service
                 {
                     throw;
                 }
+            }
+        }
+
+        public List<HeyRememberResultDto> Find(string id)
+        {
+            try
+            {
+                return _repository.GetJobs(id);
+            }
+            catch (Exception ex)
+            {
+                _exceptionHandler.Handle(ex);
+                throw;
             }
         }
     }

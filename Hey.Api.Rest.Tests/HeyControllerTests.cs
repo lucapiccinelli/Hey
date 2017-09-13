@@ -25,7 +25,7 @@ namespace Hey.Api.Rest.Tests
     {
         private HeyController _heyController;
         private Mock<IScheduleType> _scheduleTypeMock;
-        private Mock<IScheduleTypeFactory> _scheduleTypeFactoryMock;
+        private Mock<IJobRepository> _scheduleTypeFactoryMock;
 
         [SetUp]
         public void SetUp()
@@ -38,9 +38,9 @@ namespace Hey.Api.Rest.Tests
                 .Setup(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()))
                 .Returns("Mock");
 
-            _scheduleTypeFactoryMock = new Mock<IScheduleTypeFactory>();
+            _scheduleTypeFactoryMock = new Mock<IJobRepository>();
             _scheduleTypeFactoryMock
-                .Setup(factory => factory.MakeAPrototype(It.IsAny<HeyRememberDto>()))
+                .Setup(factory => factory.MakeASchedulePrototype(It.IsAny<HeyRememberDto>()))
                 .Returns(_scheduleTypeMock.Object);
 
             _heyController = new HeyController(new HeyService(_scheduleTypeFactoryMock.Object, new LogExceptionHandler()));
@@ -79,7 +79,7 @@ namespace Hey.Api.Rest.Tests
             {
                 Domain = "Hey.Api.Rest",
                 Type = "Tests",
-                Id = "Banana"
+                Name = "Banana"
             };
 
             var response = _heyController.Post(heyObj);
@@ -93,7 +93,7 @@ namespace Hey.Api.Rest.Tests
             HeyRememberDto heyObj = new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
-                Id = "Test",
+                Name = "Test",
                 DomainSpecificData = $"[{JsonConvert.SerializeObject(DateTime.Now)}, \"abc\"]"
             };
 
@@ -105,9 +105,9 @@ namespace Hey.Api.Rest.Tests
                 .Setup(type => type.Schedule(It.IsAny<HeyRememberDeferredExecution>()))
                 .Throws<Exception>();
 
-            var scheduleTypeFactoryMock = new Mock<IScheduleTypeFactory>();
+            var scheduleTypeFactoryMock = new Mock<IJobRepository>();
             scheduleTypeFactoryMock
-                .Setup(factory => factory.MakeAPrototype(It.IsAny<HeyRememberDto>()))
+                .Setup(factory => factory.MakeASchedulePrototype(It.IsAny<HeyRememberDto>()))
                 .Returns(scheduleTypeMock.Object);
 
             var heyController = new HeyController(new HeyService(scheduleTypeFactoryMock.Object, new LogExceptionHandler()));
@@ -122,7 +122,7 @@ namespace Hey.Api.Rest.Tests
             HeyRememberDto heyObj = new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
-                Id = "Test",
+                Name = "Test",
                 DomainSpecificData = $"[{JsonConvert.SerializeObject(DateTime.Now)}, \"abc\"]"
             };
 
@@ -137,7 +137,7 @@ namespace Hey.Api.Rest.Tests
             HeyRememberDto heyObj = new HeyRememberDto()
             {
                 Domain = "Hey.Api.Rest.Tests",
-                Id = "Test",
+                Name = "Test",
                 DomainSpecificData = $"[{JsonConvert.SerializeObject(DateTime.Now)}, 1]"
             };
 

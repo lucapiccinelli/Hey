@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Hey.Core.Models
 {
@@ -9,6 +10,7 @@ namespace Hey.Core.Models
         {
             Domain = string.Empty;
             Type = string.Empty;
+            Name = string.Empty;
             Id = string.Empty;
             When = new [] { DateTime.Now };
             DomainSpecificData = string.Empty;
@@ -16,12 +18,39 @@ namespace Hey.Core.Models
 
         public override string ToString()
         {
-            return $"HeyRember {Domain}/{Type}/{Id} on {When[0]}";
+            return $"HeyRember {Domain}/{Type}/{Name}/{Id} on {When[0]}";
         }
 
+        public override bool Equals(object obj)
+        {
+            if (obj == null)
+            {
+                return false;
+            }
+
+            if (obj.GetType() != GetType())
+            {
+                return false;
+            }
+
+            HeyRememberDto o = (HeyRememberDto) obj;
+            return o.Domain == Domain &&
+                   o.Type == Type &&
+                   o.Name == Name &&
+                   o.Id == Id &&
+                   o.When.SequenceEqual(When) &&
+                   o.DomainSpecificData == DomainSpecificData &&
+                   o.Recurrent == Recurrent;
+        }
+        public override int GetHashCode()
+        {
+            return base.GetHashCode();
+        }
+
+        public string Id { get; set; }
         public string Domain { get; set; }
         public string Type { get; set; }
-        public string Id { get; set; }
+        public string Name { get; set; }
         public DateTime[] When { get; set; }
         public bool Recurrent { get; set; }
         public string DomainSpecificData;

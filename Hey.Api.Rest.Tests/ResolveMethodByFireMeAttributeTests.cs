@@ -20,7 +20,7 @@ namespace Hey.Api.Rest.Tests
             {
                 Domain = "Hey.Api.Rest.Tests",
                 Type = "",
-                Id = "BindMe"
+                Name = "BindMe"
             });
             
             Assert.AreEqual(method.Name, nameof(ResolveMethodByFireMeAttributeTestClass.RetrieveMe));
@@ -34,7 +34,7 @@ namespace Hey.Api.Rest.Tests
             {
                 Domain = "Hey.Api.Rest.Tests",
                 Type = "",
-                Id = "ThisMethodDoesntExists"
+                Name = "ThisMethodDoesntExists"
             });
 
             Assert.AreEqual(MethodExecutionResultEnum.Empty, method.Invoke());

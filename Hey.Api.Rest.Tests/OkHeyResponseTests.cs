@@ -43,7 +43,7 @@ namespace Hey.Api.Rest.Tests
             {
                 Domain = "TestDomain",
                 Type = "TestType",
-                Id = "TestId",
+                Name = "TestId",
             };
 
             _httpRequestMessage = new HttpRequestMessage(HttpMethod.Post, _postUri)

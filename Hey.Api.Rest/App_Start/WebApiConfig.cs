@@ -18,6 +18,13 @@ namespace Hey.Api.Rest
 {
     public static class WebApiConfig
     {
+        public static void Initialize(HttpConfiguration config)
+        {
+            InitializeLog();
+            Register(config);
+            RegisterDependencies(config);
+        }
+
         public static void Register(HttpConfiguration config)
         {
             // Web API configuration and services
@@ -44,20 +51,9 @@ namespace Hey.Api.Rest
             var builder = new ContainerBuilder();
             builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
 
-            builder.RegisterType<LogExceptionHandler>().As<IHeyExceptionHandler>();
-            builder.RegisterType<HangFireScheduleFactory>().As<IScheduleTypeFactory>();
-            builder.RegisterType<HeyService>().As<IHeyService>();
-
-            IContainer container = builder.Build();
-            config.DependencyResolver = new AutofacWebApiDependencyResolver(container);
-        }
-
-        public static void RegisterDependencies(HttpConfiguration config, IHeyService heyService)
-        {
-            var builder = new ContainerBuilder();
-            builder.RegisterApiControllers(Assembly.GetExecutingAssembly());
-
-            builder.RegisterInstance(heyService).As<IHeyService>();
+            builder.RegisterType<LogExceptionHandler>().As<IHeyExceptionHandler>().InstancePerRequest();
+            builder.RegisterType<HangfireJobRepository>().As<IJobRepository>().InstancePerLifetimeScope();
+            builder.RegisterType<HeyService>().As<IHeyService>().InstancePerLifetimeScope();
 
             IContainer container = builder.Build();
             config.DependencyResolver = new AutofacWebApiDependencyResolver(container);

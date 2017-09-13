@@ -29,13 +29,13 @@ namespace Hey.Api.Rest.Response
 
         public IHttpActionResult Execute(HeyController controller)
         {
+            HeyRememberDeferredExecution deferredExecution = _methodBinder.CreateDeferredExecution();
+            HeyRememberDto heyRemember = deferredExecution.HeyRemember;
             try
             {
-                HeyRememberDeferredExecution deferredExecution = _methodBinder.CreateDeferredExecution();
-                HeyRememberDto heyRemember = deferredExecution.HeyRemember;
 
                 string jobId = _scheduleType.Schedule(deferredExecution);
-                string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Id}/{jobId}";
+                string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Name}/{jobId}";
 
                 _log.Info($"{heyRemember} scheduled on {heyId}");
 
@@ -43,6 +43,7 @@ namespace Hey.Api.Rest.Response
             }
             catch (Exception ex)
             {
+                _log.Error($"{heyRemember}: Error while trying to schedule job", ex);
                 return controller.ExposedInternalServerError(ex);
             }
         }

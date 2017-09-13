@@ -27,7 +27,7 @@ namespace Hey.Api.Rest
                 .GetTypes()
                 .Where(t => t.Namespace == myNamespace)
                 .SelectMany(t => t.GetMethods())
-                .FirstOrDefault(m => HasAttribute(m) && m.GetCustomAttribute<FireMeAttribute>().Id == heyRemember.Id);
+                .FirstOrDefault(m => HasAttribute(m) && m.GetCustomAttribute<FireMeAttribute>().Id == heyRemember.Name);
 
             return fireMeMethod != null
                 ? (IMethodBinder) new MethodBinder(fireMeMethod, heyRemember, _exceptionHandler)
