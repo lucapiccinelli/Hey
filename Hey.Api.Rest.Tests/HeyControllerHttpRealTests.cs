@@ -15,7 +15,7 @@ namespace Hey.Api.Rest.Tests
     [TestFixture]
     class HeyControllerHttpRealTests
     {
-        //[Ignore("To launch by hand, only if the web service is running")]
+        [Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task TestPostJsonOnARealHttpCommunication()
         {
@@ -37,7 +37,7 @@ namespace Hey.Api.Rest.Tests
             }
         }
 
-        //[Ignore("To launch by hand, only if the web service is running")]
+        [Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task WhenTheDomainCantBeFoundAsAnAssemblyMustReturnBadRequest()
         {
@@ -50,7 +50,7 @@ namespace Hey.Api.Rest.Tests
 
             using (var response = await client.PostAsJsonAsync("http://localhost:60402/api/Hey", heyObj))
             {
-                Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+                Assert.AreEqual(HttpStatusCode.InternalServerError, response.StatusCode);
             }
         }
     }
