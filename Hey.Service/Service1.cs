@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Configuration;
 using System.Data;
 using System.Diagnostics;
 using System.IO;
@@ -37,11 +38,14 @@ namespace Hey.Service
 #endif
             try
             {
+                string serviceHost = ConfigurationManager.AppSettings["HeyServiceHost"] ?? "localhost";
+                string servicePort = ConfigurationManager.AppSettings["HeyServicePort"] ?? "60400";
+
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 XmlConfigurator.Configure(new FileInfo(Path.Combine(assemblyFolder, "log.config")));
                 _log = LogManager.GetLogger(GetType());
                 _backgroundJobServer = HangfireConfig.StartHangfire("HeyDb");
-                _disposable = WebApp.Start<Startup>(url: "http://localhost:60401/");
+                _disposable = WebApp.Start<Startup>(url: $"http://{serviceHost}:{servicePort}/");
             }
             catch (Exception ex)
             {
