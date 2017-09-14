@@ -85,7 +85,7 @@ namespace Hey.Api.Rest.Tests
             var createdAtResult = result as CreatedAtRouteNegotiatedContentResult<HeyRememberDto>;
 
             Assert.AreEqual("DefaultApi", createdAtResult.RouteName);
-            Assert.AreEqual("TestDomain/TestType/TestId/banana", createdAtResult.RouteValues["id"]);
+            Assert.AreEqual("TestDomain/TestType/TestId/Default/banana", createdAtResult.RouteValues["id"]);
         }
     }
 }
