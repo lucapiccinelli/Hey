@@ -35,9 +35,8 @@ namespace Hey.Api.Rest.Response
             HeyRememberDto heyRemember = deferredExecution.HeyRemember;
             try
             {
-
                 string jobId = _scheduleType.Schedule(deferredExecution);
-                string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Name}/{jobId}";
+                string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Name}/{heyRemember.Id}/{jobId}";
 
                 _log.Info($"{heyRemember} scheduled on {heyId}");
 

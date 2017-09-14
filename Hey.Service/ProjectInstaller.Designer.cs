@@ -39,6 +39,7 @@
             // 
             // HeyServiceInstaller
             // 
+            this.HeyServiceInstaller.Description = "Job Scheduler with a RESTful API";
             this.HeyServiceInstaller.DisplayName = "HeyService";
             this.HeyServiceInstaller.ServiceName = "HeyService";
             this.HeyServiceInstaller.StartType = System.ServiceProcess.ServiceStartMode.Automatic;

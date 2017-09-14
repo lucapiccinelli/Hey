@@ -33,15 +33,15 @@ namespace Hey.Service
         {
 #if DEBUG
             System.Diagnostics.Debugger.Launch();
+            string appdatadir = Environment.GetEnvironmentVariable("LOCALAPPDATA");
 #endif
             try
             {
-                string appdatadir = Environment.GetEnvironmentVariable("LOCALAPPDATA");
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 XmlConfigurator.Configure(new FileInfo(Path.Combine(assemblyFolder, "log.config")));
                 _log = LogManager.GetLogger(GetType());
-                _disposable = WebApp.Start<Startup>(url: "http://localhost:60401/");
                 _backgroundJobServer = HangfireConfig.StartHangfire("HeyDb");
+                _disposable = WebApp.Start<Startup>(url: "http://localhost:60401/");
             }
             catch (Exception ex)
             {

@@ -1,4 +1,5 @@
 ﻿using System.Web.Http;
+using Hangfire;
 using Hey.Api.Rest;
 using Owin;
 
@@ -13,6 +14,7 @@ namespace Hey.Service
             HttpConfiguration config = new HttpConfiguration();
             WebApiConfig.Initialize(config);
             appBuilder.UseWebApi(config);
+            appBuilder.UseHangfireDashboard();
         }
     }
 }

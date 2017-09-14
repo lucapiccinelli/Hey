@@ -11,7 +11,7 @@ namespace Hey.Core.Models
             Domain = string.Empty;
             Type = string.Empty;
             Name = string.Empty;
-            Id = string.Empty;
+            Id = "Default";
             When = new [] { DateTime.Now };
             DomainSpecificData = string.Empty;
         }
