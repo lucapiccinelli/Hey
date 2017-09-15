@@ -13,6 +13,7 @@ using Hey.Api.Rest.Exceptions;
 using Hey.Api.Rest.Service;
 using log4net;
 using log4net.Config;
+using WebApiContrib.Formatting.Jsonp;
 
 namespace Hey.Api.Rest
 {
@@ -34,16 +35,24 @@ namespace Hey.Api.Rest
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
-                routeTemplate: "api/{controller}/{id}",
-                defaults: new { id = RouteParameter.Optional }
+                routeTemplate: "api/{controller}/{id}/{ext}",
+                defaults: new { id = RouteParameter.Optional, ext = "json" }
             );
 
-            config.Formatters.JsonFormatter.MediaTypeMappings
-                .Add(new RequestHeaderMapping("Accept",
-                    "text/html",
-                    StringComparison.InvariantCultureIgnoreCase,
-                    true,
-                    "application/json"));
+            config.Formatters.JsonFormatter.AddUriPathExtensionMapping("json", "application/json");
+            config.Formatters.XmlFormatter.AddUriPathExtensionMapping("xml", "text/xml");
+
+            var jsonpFormatter = new JsonpMediaTypeFormatter(config.Formatters.JsonFormatter);
+            config.Formatters.Insert(0, jsonpFormatter);
+
+            jsonpFormatter.AddUriPathExtensionMapping("jsonp", "text/javascript");
+
+            //config.Formatters.JsonFormatter.MediaTypeMappings
+            //    .Add(new RequestHeaderMapping("Accept",
+            //        "text/html",
+            //        StringComparison.InvariantCultureIgnoreCase,
+            //        true,
+            //        "application/json"));
         }
 
         public static void RegisterDependencies(HttpConfiguration config)

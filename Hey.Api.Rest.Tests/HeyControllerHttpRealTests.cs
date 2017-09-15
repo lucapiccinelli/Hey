@@ -15,7 +15,7 @@ namespace Hey.Api.Rest.Tests
     [TestFixture]
     class HeyControllerHttpRealTests
     {
-        [Ignore("To launch by hand, only if the web service is running")]
+        //[Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task TestPostJsonOnARealHttpCommunication()
         {
@@ -25,7 +25,7 @@ namespace Hey.Api.Rest.Tests
                 Domain = "Hey.Soardi",
                 Type = "Mail",
                 Name = "Note",
-                Id = "10343",
+                Id = "1952",
                 When = new[] { DateTime.Now + TimeSpan.FromSeconds(60), DateTime.UtcNow },
                 DomainSpecificData = "[10343, \"luca.picci@gmail.com\"]"
             };
