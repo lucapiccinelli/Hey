@@ -15,7 +15,7 @@ namespace Hey.Api.Rest.Tests
     [TestFixture]
     class HeyControllerHttpRealTests
     {
-        //[Ignore("To launch by hand, only if the web service is running")]
+        [Ignore("To launch by hand, only if the web service is running")]
         [Test]
         public async Task TestPostJsonOnARealHttpCommunication()
         {
@@ -26,13 +26,13 @@ namespace Hey.Api.Rest.Tests
                 Type = "Mail",
                 Name = "Note",
                 Id = "1952",
-                When = new[] { DateTime.Now + TimeSpan.FromSeconds(60), DateTime.UtcNow },
+                When = new[] { DateTime.Now + TimeSpan.FromDays(1), DateTime.UtcNow },
                 DomainSpecificData = "[10343, \"luca.picci@gmail.com\"]"
             };
             string id = HttpUtility.UrlEncode(heyObj.DomainSpecificData);
             
 
-            using (var response = await client.PostAsJsonAsync("http://localhost:60401/api/Hey", heyObj))
+            using (var response = await client.PostAsJsonAsync("http://localhost.fiddler:60401/api/Hey", heyObj))
             {
                 Assert.AreEqual(HttpStatusCode.Created, response.StatusCode);
             }

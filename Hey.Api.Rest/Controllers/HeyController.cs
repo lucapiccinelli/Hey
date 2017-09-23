@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using System.Web.Http.Cors;
 using System.Web.Http.Description;
 using Hangfire;
 using Hangfire.Storage;
@@ -12,6 +13,7 @@ using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Controllers
 {
+    [EnableCors(origins: "*", headers: "*", methods: "*")]
     public class HeyController : ApiController
     {
         private readonly IHeyService _heyService;
