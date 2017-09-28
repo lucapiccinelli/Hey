@@ -23,17 +23,6 @@ namespace Hey.Core.Services.Mail.Smtp
 
         #endregion
 
-        /// <summary>
-        /// Crea un nuovo messaggio
-        /// </summary>
-        /// <param name="from">Indirizzo mittente</param>
-        /// <param name="to">Indirizzi destinazione separati da virgola</param>
-        /// <param name="cc">Indirizzi copia separati da virgola</param>
-        /// <param name="bcc">Indirizzi copia nascosta separati da virgola</param>
-        /// <param name="readNotificationAddress">[Opzionale] Richiesta della ricevuta di lettura</param>
-        /// <param name="attachments">[Opzionale] Lista degli allegati</param>
-        /// <param name="htmlBody"></param>
-        /// /// 
         public SmtpMailMessage(string from, string cc, string bcc, string readNotificationAddress = null, List<string> attachments = null, bool htmlBody = false)
         {
             _htmlBody = htmlBody;
@@ -59,12 +48,6 @@ namespace Hey.Core.Services.Mail.Smtp
 
         public void Save(string filename)
         {
-            // luca20150814:
-            // L' unica maniera che ho trovato per salvare il file è utilizzando ancora Net.Mail.SmtpClient 
-            // specificando DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory. E' possibile dirgli
-            // solo il nome dell directory e non il nome del file; per questo motivo uso una directory
-            // temporanea locale e poi sposto l'unico file presente rinominandolo.
-
             using (MailMessage message = ToNetMessage())
             {
                 string tmpdirname = Path.GetRandomFileName();
@@ -105,24 +88,19 @@ namespace Hey.Core.Services.Mail.Smtp
                 IsBodyHtml = _htmlBody,
                 From = new System.Net.Mail.MailAddress(_from),
             };
-
-            // Inserisco i destinatari
+            
             foreach (String to in To ?? new List<String>())
                 message.To.Add(new System.Net.Mail.MailAddress(to));
-
-            // Inserisco i CC
+            
             foreach (String to in _cc ?? new List<String>())
                 message.CC.Add(new System.Net.Mail.MailAddress(to));
-
-            // Inserisco i BCC
+            
             foreach (String to in _bcc ?? new List<String>())
                 message.Bcc.Add(new System.Net.Mail.MailAddress(to));
-
-            // Inserisco le mail per la notifica di lettura
+            
             foreach (String readReceipt in _readNotificationAddresses ?? new List<String>())
                 message.Headers.Add("Disposition-Notification-To", readReceipt);
-
-            // Inserisco gli allegati
+            
             foreach (String att in _attachments ?? new List<String>())
                 message.Attachments.Add(new System.Net.Mail.Attachment(att));
 
@@ -155,15 +133,11 @@ namespace Hey.Core.Services.Mail.Smtp
 #pragma warning restore 0618
 
         #region Private Helpers
-
-        /// <summary>
-        /// Splitta la stringa in ingresso sul carattere ',' e crea la lista
-        /// </summary>
+        
         private List<String> splitCommaAddresses(String str)
         {
             try
             {
-                // Stringa vuota --> Lista vuota
                 if (str == null)
                     return new List<String>();
 
