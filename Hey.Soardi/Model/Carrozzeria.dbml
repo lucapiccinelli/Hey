@@ -1,11 +1,162 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Carrozzeria2017" Class="CarrozzeriaDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.1.200\sqlexpress;Initial Catalog=Carrozzeria2017;User ID=sa" SettingsObjectName="Hey.Soardi.Properties.Settings" SettingsPropertyName="Carrozzeria2017ConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="AppSettings" ConnectionString="Data Source=192.168.0.200\sqlexpress;Initial Catalog=Carrozzeria2017;User ID=sa" SettingsObjectName="Hey.Soardi.Properties.Settings" SettingsPropertyName="Carrozzeria2017ConnectionString1" Provider="System.Data.SqlClient" />
   <Table Name="dbo.Veicoli_Note" Member="Veicoli_Notes">
     <Type Name="Veicoli_Note">
       <Column Name="IdNota" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="IdVeicolo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="DataNota" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
       <Column Name="Nota" Type="System.String" DbType="VarChar(500) NOT NULL" CanBeNull="false" />
+      <Association Name="Veicoli_Veicoli_Note" Member="Veicoli" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Veicoli" Member="Veicolis">
+    <Type Name="Veicoli">
+      <Column Name="IdVeicolo" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="IdStato" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="numPreventivo" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="DenominazioneCliente_" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="NumTelefono_" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="DescrizioneVeicolo" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="TargaVeicolo" Type="System.String" DbType="VarChar(8)" CanBeNull="true" />
+      <Column Name="DescrizioneLavoro" Type="System.String" DbType="Text" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="numPezzi" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataIngresso" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DataConsegna" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DataFondo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="MacchinaSostitutiva" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DataOrdineRicambi" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DataInserimentoVeicolo" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="LavorazioneTerminata" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DenominazioneReferente" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="NumTelefonoReferente" Type="System.String" DbType="VarChar(25)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga1" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga2" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga3" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga4" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga5" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga6" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga7" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="LavoriDaEseguireRiga8" Type="System.String" DbType="VarChar(35)" CanBeNull="true" />
+      <Column Name="AgenteCliente" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AgentePassaParola" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AgentePubblicita" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AgenteCanalizzatoDa" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="CanalizzatoDa" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="TelaioVeicolo" Type="System.String" DbType="VarChar(17)" CanBeNull="true" />
+      <Column Name="PreventivoAssicurazione" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="PreventivoCliente" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IdPagante" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdTipoSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Assicurazione" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Agenzia" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Perito" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Concordato" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="OkRiparazione" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ImportoFranchigia" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="VoceRiparazioneRoutaAnterioreDestra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneSottoportaLateraleDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneRuotaPosterioreDestra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneProiettoreAnterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParafangoAnterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazionePortaAnterioreDestra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazionePortaPosterioreDestra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParafangoPosterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneFanalePosterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneSpoilerAnteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneRetrovisoreLateraleDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneScendenteAnterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneScendentePosterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneFissoPosterioreDestro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneSpoilerPosteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParaurtoAnteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneCofanoAnteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParabrezzaAnteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneTetto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneLunottoPosteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazionePortelloPosteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParaurtoPosteriore" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneRetrovisoreLateraleSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneScendenteAnterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneScendentePosterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneFissoPosterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneProiettoreAnterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParafangoAnterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazionePortaAnterioreSinistra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazionePortaPosterioreSinistra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneParafangoPosterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneFanalePosterioreSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneRuotaAnterioreSinistra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneSottoportaLateraleSinistro" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="VoceRiparazioneRuotaPosterioreSinistra" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataPreventivoAssicurazione" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DataPreventivoCliente" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DataPerito" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="DataConcordato" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ChilometriVeicolo" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="VerniciareRicambi" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ColoreRicambi" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NumeroSinistro" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NomeUltimoReportStampato" Type="System.String" DbType="VarChar(300)" CanBeNull="true" />
+      <Column Name="DataScadenzaNota" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="OraScadenzaNota" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="Nota" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="Esportato" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DataEsportazione" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ConPriorita" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="StatoAvanzamentoLavorazioni" Type="System.String" DbType="VarChar(8000)" CanBeNull="true" />
+      <Column Name="DataProntaConsegna" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="IdAgente" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="IdPagamento" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FirmaCommessa" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DataInvioQuestionario" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="HashCode" Type="System.String" DbType="VarChar(32)" CanBeNull="true" />
+      <Column Name="NumMotore" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="DataImmatricolazione" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="CavalliFiscaliKw" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="FotoVerniciatura" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IdReparto" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="UrlImage" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Terminabile" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IdAutoSostitutiva" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="Nota1" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="EscludiDaControlliDataFondo" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AvvisatoCliente" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="DataScadenzaRevisione" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="NumeroFattura" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="DataFattura" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ImponibileFattura" Type="System.Decimal" DbType="Money" CanBeNull="true" />
+      <Column Name="FatturaPagata" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="RicambiConsegnatiVerniciatiAvvisatoCliente" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="AvvisatoClienteTipo" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="Postponi" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="PostponiDa" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="VeicoloConImmagini" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="ImmagineDefault" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="DataIngressoEffettiva" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="AvvisoPromemoriaSpedito" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="TipoDocumento" Type="System.String" DbType="VarChar(5)" CanBeNull="true" />
+      <Column Name="IdAgentePagante" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="EscludiDaRichiamoRevisioni" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="EmailReferente" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="AssicurazioneControparte" Type="System.String" DbType="VarChar(250)" CanBeNull="true" />
+      <Column Name="PercorsoFile" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="IpGeneratore" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="EmailDestinatario" Type="System.String" DbType="VarChar(50)" CanBeNull="true" />
+      <Column Name="NoteFattura" Type="System.String" DbType="VarChar(150)" CanBeNull="true" />
+      <Column Name="Abilitato" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="Piazzola" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="CodAssicurazioneCliente" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CodAssicurazioneControParte" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CodLiquidatore" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CodPerito" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CodPagante" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="CodReferente" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
+      <Column Name="rigenerato" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="importato" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
+      <Column Name="IdSede" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="Veicoli_Veicoli" Member="Veicoli2" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli" Cardinality="One" />
+      <Association Name="Veicoli_Veicoli_Note" Member="Veicoli_Notes" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli_Note" />
+      <Association Name="Veicoli_Veicoli" Member="Veicoli1" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

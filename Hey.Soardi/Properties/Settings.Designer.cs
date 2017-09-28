@@ -22,5 +22,27 @@ namespace Hey.Soardi.Properties {
                 return defaultInstance;
             }
         }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.1.200\\sqlexpress;Initial Catalog=Carrozzeria2017;Persist Secu" +
+            "rity Info=True;User ID=sa;Password=riparazioni")]
+        public string Carrozzeria2017ConnectionString {
+            get {
+                return ((string)(this["Carrozzeria2017ConnectionString"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
+        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=192.168.0.200\\sqlexpress;Initial Catalog=Carrozzeria2017;User ID=sa;P" +
+            "assword=riparazioni")]
+        public string Carrozzeria2017ConnectionString1 {
+            get {
+                return ((string)(this["Carrozzeria2017ConnectionString1"]));
+            }
+        }
     }
 }

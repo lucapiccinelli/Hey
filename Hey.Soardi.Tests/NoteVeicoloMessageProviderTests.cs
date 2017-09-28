@@ -22,5 +22,21 @@ namespace Hey.Soardi.Tests
 
             Assert.AreEqual("BANANA", txt);
         }
+
+        [Test]
+        public void TestThatMessageProviderCanRetreiveTheCorrectAbstract()
+        {
+            var ping = new Ping();
+            PingReply reply = ping.Send("192.168.0.200");
+            if (reply.Status != IPStatus.Success)
+            {
+                Assert.Ignore("La VPN e' spenta");
+            }
+
+            NoteVeicoloMessageProvider messageProvider = new NoteVeicoloMessageProvider(10343);
+            string txt = messageProvider.GetAbstract();
+
+            Assert.True(txt.Contains("15378"));
+        }
     }
 }

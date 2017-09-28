@@ -17,14 +17,23 @@ namespace Hey.Soardi
         {
             using (CarrozzeriaDataContext dataContext = new CarrozzeriaDataContext())
             {
-                Veicoli_Note nota = dataContext.Veicoli_Notes.Single(note => note.IdNota == _idNota);
+                Veicoli_Note nota = GetNota(dataContext);
                 return nota.Nota;
             }
         }
 
         public string GetAbstract()
         {
-            return $"Promemoria della nota numero {_idNota}";
+            using (CarrozzeriaDataContext dataContext = new CarrozzeriaDataContext())
+            {
+                Veicoli_Note nota = GetNota(dataContext);
+                return $"Promemoria della pratica numero {nota.Veicoli.numPreventivo}";
+            }
+        }
+
+        private Veicoli_Note GetNota(CarrozzeriaDataContext dataContext)
+        {
+            return dataContext.Veicoli_Notes.Single(note => note.IdNota == _idNota);
         }
     }
 }
