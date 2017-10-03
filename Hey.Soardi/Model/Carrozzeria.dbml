@@ -151,11 +151,9 @@
       <Column Name="CodPerito" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="CodPagante" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
       <Column Name="CodReferente" Type="System.String" DbType="VarChar(15)" CanBeNull="true" />
-      <Column Name="rigenerato" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
-      <Column Name="importato" Type="System.Boolean" DbType="Bit" CanBeNull="true" />
       <Column Name="IdSede" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="Veicoli_Veicoli" Member="Veicoli2" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli" Cardinality="One" />
       <Association Name="Veicoli_Veicoli_Note" Member="Veicoli_Notes" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli_Note" />
+      <Association Name="Veicoli_Veicoli" Member="Veicoli2" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli" Cardinality="One" />
       <Association Name="Veicoli_Veicoli" Member="Veicoli1" ThisKey="IdVeicolo" OtherKey="IdVeicolo" Type="Veicoli" IsForeignKey="true" />
     </Type>
   </Table>

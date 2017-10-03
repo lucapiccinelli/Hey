@@ -9,11 +9,19 @@ namespace Hey.Soardi
 {
     static class Connections
     {
-        public static readonly string Carrozzeria;
+        public static readonly string CarrozzeriaDarfo;
+        public static readonly string CarrozzeriaCosta;
+        public static Dictionary<string, string> Strings;
 
         static Connections()
         {
-            Carrozzeria = ConfigurationManager.ConnectionStrings["Carrozzeria2017"].ConnectionString;
+            CarrozzeriaDarfo = ConfigurationManager.ConnectionStrings["Carrozzeria2017"].ConnectionString;
+            CarrozzeriaCosta = ConfigurationManager.ConnectionStrings["CarrozzeriaCosta"].ConnectionString;
+            Strings = new Dictionary<string, string>
+            {
+                {"Darfo", CarrozzeriaDarfo},
+                {"Costa", CarrozzeriaCosta}
+            };
         }
     }
 }

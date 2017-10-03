@@ -14,9 +14,7 @@ namespace Hey.Api.Rest.Schedules
         public string Schedule(HeyRememberDeferredExecution deferredExecution)
         {
             HeyRememberDto heyRemember = deferredExecution.HeyRemember;
-            return heyRemember.When[0] <= DateTime.Now
-                ? BackgroundJob.Enqueue(() => deferredExecution.Execute(heyRemember))
-                : BackgroundJob.Schedule(() => deferredExecution.Execute(heyRemember), new DateTimeOffset(heyRemember.When[0]));
+            return BackgroundJob.Schedule(() => deferredExecution.Execute(heyRemember), new DateTimeOffset(heyRemember.When[0]));
         }
 
         public static IScheduleType MakePrototype()

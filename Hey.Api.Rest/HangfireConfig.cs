@@ -24,7 +24,7 @@ namespace Hey.Api.Rest
                 .UseLog4NetLogProvider()
                 .UseSqlServerStorage(dbName);
 
-            return new BackgroundJobServer();
+            return new BackgroundJobServer(new BackgroundJobServerOptions());
         }
 
         private static void StartSqlServer()

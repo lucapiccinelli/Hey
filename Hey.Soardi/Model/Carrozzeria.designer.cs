@@ -39,7 +39,7 @@ namespace Hey.Soardi.Model
     #endregion
 		
 		public CarrozzeriaDataContext() : 
-				base(Connections.Carrozzeria, mappingSource)
+				base(Connections.CarrozzeriaDarfo, mappingSource)
 		{
 			OnCreated();
 		}
@@ -546,15 +546,11 @@ namespace Hey.Soardi.Model
 		
 		private string _CodReferente;
 		
-		private System.Nullable<bool> _rigenerato;
-		
-		private System.Nullable<bool> _importato;
-		
 		private System.Nullable<int> _IdSede;
 		
-		private EntityRef<Veicoli> _Veicoli2;
-		
 		private EntitySet<Veicoli_Note> _Veicoli_Notes;
+		
+		private EntityRef<Veicoli> _Veicoli2;
 		
 		private EntityRef<Veicoli> _Veicoli1;
 		
@@ -842,18 +838,14 @@ namespace Hey.Soardi.Model
     partial void OnCodPaganteChanged();
     partial void OnCodReferenteChanging(string value);
     partial void OnCodReferenteChanged();
-    partial void OnrigeneratoChanging(System.Nullable<bool> value);
-    partial void OnrigeneratoChanged();
-    partial void OnimportatoChanging(System.Nullable<bool> value);
-    partial void OnimportatoChanged();
     partial void OnIdSedeChanging(System.Nullable<int> value);
     partial void OnIdSedeChanged();
     #endregion
 		
 		public Veicoli()
 		{
-			this._Veicoli2 = default(EntityRef<Veicoli>);
 			this._Veicoli_Notes = new EntitySet<Veicoli_Note>(new Action<Veicoli_Note>(this.attach_Veicoli_Notes), new Action<Veicoli_Note>(this.detach_Veicoli_Notes));
+			this._Veicoli2 = default(EntityRef<Veicoli>);
 			this._Veicoli1 = default(EntityRef<Veicoli>);
 			OnCreated();
 		}
@@ -3662,46 +3654,6 @@ namespace Hey.Soardi.Model
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_rigenerato", DbType="Bit")]
-		public System.Nullable<bool> rigenerato
-		{
-			get
-			{
-				return this._rigenerato;
-			}
-			set
-			{
-				if ((this._rigenerato != value))
-				{
-					this.OnrigeneratoChanging(value);
-					this.SendPropertyChanging();
-					this._rigenerato = value;
-					this.SendPropertyChanged("rigenerato");
-					this.OnrigeneratoChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_importato", DbType="Bit")]
-		public System.Nullable<bool> importato
-		{
-			get
-			{
-				return this._importato;
-			}
-			set
-			{
-				if ((this._importato != value))
-				{
-					this.OnimportatoChanging(value);
-					this.SendPropertyChanging();
-					this._importato = value;
-					this.SendPropertyChanged("importato");
-					this.OnimportatoChanged();
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_IdSede", DbType="Int")]
 		public System.Nullable<int> IdSede
 		{
@@ -3719,6 +3671,19 @@ namespace Hey.Soardi.Model
 					this.SendPropertyChanged("IdSede");
 					this.OnIdSedeChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Veicoli_Veicoli_Note", Storage="_Veicoli_Notes", ThisKey="IdVeicolo", OtherKey="IdVeicolo")]
+		public EntitySet<Veicoli_Note> Veicoli_Notes
+		{
+			get
+			{
+				return this._Veicoli_Notes;
+			}
+			set
+			{
+				this._Veicoli_Notes.Assign(value);
 			}
 		}
 		
@@ -3748,19 +3713,6 @@ namespace Hey.Soardi.Model
 					}
 					this.SendPropertyChanged("Veicoli2");
 				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Veicoli_Veicoli_Note", Storage="_Veicoli_Notes", ThisKey="IdVeicolo", OtherKey="IdVeicolo")]
-		public EntitySet<Veicoli_Note> Veicoli_Notes
-		{
-			get
-			{
-				return this._Veicoli_Notes;
-			}
-			set
-			{
-				this._Veicoli_Notes.Assign(value);
 			}
 		}
 		

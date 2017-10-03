@@ -30,11 +30,12 @@ namespace Hey.Soardi.Mail
         }
 
         [FireMe("Note")]
-        public void Send(long idNota, string receiverMail)
+        public void Send(long idNota, string receiverMail, string connection)
         {
             var emailClient = new SendEmailClient(_hostname, _hostport, _username, _password, _security);
-            var noteVeicoloSender = new NoteVeicoloSender(emailClient.ComposeMessage(_from, receiverMail));
-            noteVeicoloSender.Send((int) idNota, receiverMail);
+
+            var messageProvider = new NoteVeicoloMessageProvider((int) idNota, Connections.Strings[connection]);
+            emailClient.ComposeMessage(_from, receiverMail).Send(messageProvider, receiverMail);
         }
     }
 }
