@@ -33,9 +33,9 @@ namespace Hey.Soardi.Mail
         public void Send(long idNota, string receiverMail, string connection)
         {
             var emailClient = new SendEmailClient(_hostname, _hostport, _username, _password, _security);
-
-            var messageProvider = new NoteVeicoloMessageProvider((int) idNota, Connections.Strings[connection]);
-            emailClient.ComposeMessage(_from, receiverMail).Send(messageProvider, receiverMail);
+            var messageProvider = new NoteVeicoloMessageProvider((int)idNota, Connections.Strings[connection]);
+            var noteVeicoloSender = new NoteVeicoloSender(emailClient.ComposeMessage(_from, receiverMail), messageProvider);
+            noteVeicoloSender.Send((int) idNota, receiverMail);
         }
     }
 }

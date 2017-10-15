@@ -1,20 +1,22 @@
-﻿using Hey.Core.Services;
+﻿using Hey.Core;
+using Hey.Core.Services;
 
 namespace Hey.Soardi
 {
     class NoteVeicoloSender
     {
         private readonly ISenderService _senderService;
-
-        public NoteVeicoloSender(ISenderService senderService)
+        private readonly IMessageProvider _messageProvider;
+        
+        public NoteVeicoloSender(ISenderService senderService, IMessageProvider messageProvider)
         {
             _senderService = senderService;
+            _messageProvider = messageProvider;
         }
 
         public void Send(int idNota, string receiverString)
         {
-            var messageProvider = new NoteVeicoloMessageProvider(idNota);
-            _senderService.Send(messageProvider, receiverString);
+            _senderService.Send(_messageProvider, receiverString);
         }
     }
 }
