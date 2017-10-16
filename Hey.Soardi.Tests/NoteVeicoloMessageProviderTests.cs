@@ -50,7 +50,7 @@ namespace Hey.Soardi.Tests
                 Assert.Ignore("La VPN e' spenta");
             }
 
-            NoteVeicoloMessageProvider messageProvider = new NoteVeicoloMessageProvider(10343, ConfigurationManager.ConnectionStrings["CarrozzeriaCosta"].ConnectionString);
+            NoteVeicoloMessageProvider messageProvider = new NoteVeicoloMessageProvider(10343, Connections.Strings["CarrozzeriaCosta"]);
             string txt = messageProvider.GetAbstract();
 
             Assert.True(txt.Contains("14889"));

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hey.Soardi
 {
-    static class Connections
+    public static class Connections
     {
         public static readonly string CarrozzeriaDarfo;
         public static readonly string CarrozzeriaCosta;
@@ -22,6 +22,11 @@ namespace Hey.Soardi
                 {"Darfo", CarrozzeriaDarfo},
                 {"Costa", CarrozzeriaCosta}
             };
+
+            foreach (ConnectionStringSettings connectionString in ConfigurationManager.ConnectionStrings)
+            {
+                Strings.Add(connectionString.Name, connectionString.ConnectionString);
+            }
         }
     }
 }
