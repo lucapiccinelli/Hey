@@ -11,7 +11,7 @@ namespace Hey.Soardi
     {
         public static readonly string CarrozzeriaDarfo;
         public static readonly string CarrozzeriaCosta;
-        public static Dictionary<string, string> Strings;
+        public static readonly Dictionary<string, string> Strings;
 
         static Connections()
         {

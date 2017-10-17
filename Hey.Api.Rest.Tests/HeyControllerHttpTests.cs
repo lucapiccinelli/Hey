@@ -71,6 +71,18 @@ namespace Hey.Api.Rest.Tests
             Assert.AreEqual(_processingHeyRemember, result.First().HeyRemember);
         }
 
+        [Test, Order(13)]
+        public void TestGetOfARecurringJobById()
+        {
+            _heyController.Post(_recurringHeyRemember);
+            _repository.Refresh();
+
+            IEnumerable<HeyRememberResultDto> result = _heyController.Get(_recurringId);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
+            Assert.AreEqual(_recurringHeyRemember, result.First().HeyRemember);
+        }
+
         [Test, Order(20)]
         public void TestUpdateOfAScheduledJob()
         {
@@ -100,12 +112,20 @@ namespace Hey.Api.Rest.Tests
             IHttpActionResult result = _heyController.Delete(_failedId);
             Assert.IsInstanceOf<OkResult>(result);
         }
+
+        [Test, Order(102)]
+        public void TestDeleteOfARecurringJobById()
+        {
+            IHttpActionResult result = _heyController.Delete(_recurringId);
+            Assert.IsInstanceOf<OkResult>(result);
+        }
     }
 
     internal class HttpTestsClass
     {
         public static bool executed = false;
         public static bool done = false;
+        public static int executionCount = 0;
 
         [FireMe("GetTests")]
         public void MethodToFire()
@@ -120,6 +140,12 @@ namespace Hey.Api.Rest.Tests
         {
             executed = true;
             throw new Exception("blaaaaaaaaaaaaaaaaaaaaaa");
+        }
+
+        [FireMe("RecurringTests")]
+        public void RecurringMethod()
+        {
+            ++executionCount;
         }
     }
 }

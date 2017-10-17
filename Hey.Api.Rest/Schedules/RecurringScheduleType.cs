@@ -1,5 +1,6 @@
 using System.Web;
 using Hangfire;
+using Hey.Core.Models;
 
 namespace Hey.Api.Rest.Schedules
 {
@@ -17,8 +18,9 @@ namespace Hey.Api.Rest.Schedules
 
         public string Schedule(HeyRememberDeferredExecution deferredExecution)
         {
-            string id = HttpUtility.UrlEncode(deferredExecution.HeyRemember.DomainSpecificData.Normalize());
-            RecurringJob.AddOrUpdate(id, () => deferredExecution.Execute(deferredExecution.HeyRemember), Cron.Minutely);
+            HeyRememberDto heyRemember = deferredExecution.HeyRemember;
+            string id = $"{heyRemember.Type}/{heyRemember.When[0]}/{heyRemember.CronExpression}".GetHashCode().ToString();
+            RecurringJob.AddOrUpdate(id, () => deferredExecution.Execute(deferredExecution.HeyRemember), heyRemember.CronExpression);
             return id;
         }
     }

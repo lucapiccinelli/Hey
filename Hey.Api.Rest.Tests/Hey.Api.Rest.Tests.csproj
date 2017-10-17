@@ -87,6 +87,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HangfireJobRepositoryTests.cs" />
     <Compile Include="HeyControllerHttpTests.cs" />
     <Compile Include="HangfireDependentTest.cs" />
     <Compile Include="OkHeyResponseTests.cs" />

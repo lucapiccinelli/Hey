@@ -18,6 +18,8 @@ namespace Hey.Api.Rest.Tests
         protected HeyRememberDto _processingHeyRemember;
         protected string _failedId;
         protected HeyRememberDto _failedHeyRemember;
+        protected HeyRememberDto _recurringHeyRemember;
+        protected string _recurringId;
 
         [OneTimeSetUp]
         public void SetUp()
@@ -56,6 +58,17 @@ namespace Hey.Api.Rest.Tests
                 Id = _failedId,
                 DomainSpecificData = "[]",
                 When = new[] { DateTime.Now }
+            };
+
+            _recurringId = "4";
+            _recurringHeyRemember = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest.Tests",
+                Name = "RecurringTests",
+                Id = _recurringId,
+                DomainSpecificData = "[]",
+                When = new[] { DateTime.Now },
+                CronExpression = "* * * * *",
             };
         }
 

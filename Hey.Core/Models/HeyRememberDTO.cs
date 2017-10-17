@@ -14,6 +14,7 @@ namespace Hey.Core.Models
             Id = "Default";
             When = new [] { DateTime.Now };
             DomainSpecificData = string.Empty;
+            CronExpression = string.Empty;
         }
 
 
@@ -26,7 +27,7 @@ namespace Hey.Core.Models
             When = new DateTime[other.When.Length];
             other.When.CopyTo(When, 0);
             DomainSpecificData = other.DomainSpecificData;
-            Recurrent = other.Recurrent;
+            CronExpression = other.CronExpression;
         }
 
         public override string ToString()
@@ -53,7 +54,7 @@ namespace Hey.Core.Models
                    o.Id == Id &&
                    o.When.SequenceEqual(When) &&
                    o.DomainSpecificData == DomainSpecificData &&
-                   o.Recurrent == Recurrent;
+                   o.CronExpression == CronExpression;
         }
         public override int GetHashCode()
         {
@@ -65,7 +66,7 @@ namespace Hey.Core.Models
         public string Type { get; set; }
         public string Name { get; set; }
         public DateTime[] When { get; set; }
-        public bool Recurrent { get; set; }
+        public string CronExpression { get; set; }
         public string DomainSpecificData;
     }
 }
