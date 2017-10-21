@@ -95,7 +95,7 @@ namespace Hey.Api.Rest.Tests
             HeyRememberDto scheduledCopy = new HeyRememberDto(_scheduledHeyRemember);
             scheduledCopy.When[0] += TimeSpan.FromMinutes(60);
             IHttpActionResult resultAction = _heyController.Put(_scheduledId, scheduledCopy);
-            Assert.IsInstanceOf<OkResult>(resultAction);
+            Assert.IsInstanceOf<CreatedAtRouteNegotiatedContentResult<HeyRememberDto>>(resultAction);
 
             _repository.Refresh();
 
@@ -114,7 +114,7 @@ namespace Hey.Api.Rest.Tests
 
             recurringCopy.When[0] = new FindDatesFromHeyRemember(recurringCopy).Next();
 
-            Assert.IsInstanceOf<OkResult>(resultAction);
+            Assert.IsInstanceOf<CreatedAtRouteNegotiatedContentResult<HeyRememberDto>>(resultAction);
 
             _repository.Refresh();
 
