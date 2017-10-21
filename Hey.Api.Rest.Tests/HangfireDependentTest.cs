@@ -67,7 +67,7 @@ namespace Hey.Api.Rest.Tests
                 Name = "RecurringTests",
                 Id = _recurringId,
                 DomainSpecificData = "[]",
-                When = new[] { DateTime.Now },
+                When = new[] { DateTime.Today },
                 CronExpression = "* * * * *",
             };
         }

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using System.Web.Http.Results;
 using Hangfire;
+using Hey.Core;
 using Hey.Core.Attributes;
 using Hey.Core.Models;
 using NUnit.Framework;
@@ -77,10 +78,15 @@ namespace Hey.Api.Rest.Tests
             _heyController.Post(_recurringHeyRemember);
             _repository.Refresh();
 
+            HeyRememberDto expectedHeyRemember = new HeyRememberDto(_recurringHeyRemember)
+            {
+                When = {[0] = new FindDatesFromHeyRemember(_recurringHeyRemember).Next()}
+            };
+
             IEnumerable<HeyRememberResultDto> result = _heyController.Get(_recurringId);
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
-            Assert.AreEqual(_recurringHeyRemember, result.First().HeyRemember);
+            Assert.AreEqual(expectedHeyRemember, result.First().HeyRemember);
         }
 
         [Test, Order(20)]
@@ -97,6 +103,25 @@ namespace Hey.Api.Rest.Tests
             Assert.AreEqual(1, result.Count());
             Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
             Assert.AreEqual(scheduledCopy, result.First().HeyRemember);
+        }
+
+        [Test, Order(21)]
+        public void TestUpdateOfARecurringJob()
+        {
+            HeyRememberDto recurringCopy = new HeyRememberDto(_recurringHeyRemember);
+            recurringCopy.When[0] += TimeSpan.FromMinutes(60);
+            IHttpActionResult resultAction = _heyController.Put(_recurringId, recurringCopy);
+
+            recurringCopy.When[0] = new FindDatesFromHeyRemember(recurringCopy).Next();
+
+            Assert.IsInstanceOf<OkResult>(resultAction);
+
+            _repository.Refresh();
+
+            IEnumerable<HeyRememberResultDto> result = _heyController.Get(_recurringId);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
+            Assert.AreEqual(recurringCopy, result.First().HeyRemember);
         }
 
         [Test, Order(100)]

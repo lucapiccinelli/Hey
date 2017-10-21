@@ -6,6 +6,7 @@ using Hangfire;
 using Hangfire.Storage;
 using Hangfire.Storage.Monitoring;
 using Hey.Api.Rest.Schedules;
+using Hey.Core;
 using Hey.Core.Models;
 
 namespace Hey.Api.Rest
@@ -66,7 +67,13 @@ namespace Hey.Api.Rest
 
             //Recurring
             List<HeyRememberResultDto> filteredRecurring = _recurring
-                .Select(recurringDto => new HeyRememberResultDto(recurringDto.Id, (HeyRememberDto)recurringDto.Job.Args[0], HeyRememberStatus.Scheduled))
+                .Select(recurringDto =>
+                {
+                    HeyRememberDto nextDateHeyRember = (HeyRememberDto)recurringDto.Job.Args[0];
+                    nextDateHeyRember.When[0] = new FindDatesFromHeyRemember(nextDateHeyRember).Next();
+                    return new HeyRememberResultDto(recurringDto.Id, nextDateHeyRember,
+                            HeyRememberStatus.Scheduled);
+                })
                 .Where(heyRememberRes => heyRememberRes.HeyRemember.Id == id)
                 .ToList();
             jobs.AddRange(filteredRecurring);
