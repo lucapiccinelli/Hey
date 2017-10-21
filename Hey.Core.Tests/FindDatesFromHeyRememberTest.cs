@@ -14,14 +14,15 @@ namespace Hey.Core.Tests
         [TestCase("30 21 * * *", "21/10/2017 21:30")]
         [TestCase("30 21 * * 2", "24/10/2017 21:30")]
         [TestCase("30 12 21 10 *", "21/10/2018 12:30")]
+        [TestCase("", "21/10/2017 15:30")]
         public void GivenAHeyRemember_WithACronExpression_NextDateShouldEvaluteAsFollows(string cronExpression, string expectedDateStr)
         {
+            DateTime startingDate = DateTime.Parse("21/10/2017 15:30");
             HeyRememberDto hey = new HeyRememberDto()
             {
+                When = new [] {startingDate},
                 CronExpression = cronExpression
             };
-
-            DateTime startingDate = DateTime.Parse("21/10/2017 15:30");
 
             DateTime expected = DateTime.Parse(expectedDateStr);
             FindDatesFromHeyRemember findDates = new FindDatesFromHeyRemember(hey);

@@ -7,6 +7,7 @@ using Hangfire.Server;
 using Hey.Api.Rest.Controllers;
 using Hey.Api.Rest.Exceptions;
 using Hey.Api.Rest.Service;
+using Hey.Core;
 using Hey.Core.Models;
 using log4net;
 
@@ -35,6 +36,8 @@ namespace Hey.Api.Rest.Response
             HeyRememberDto heyRemember = deferredExecution.HeyRemember;
             try
             {
+                heyRemember.When[0] = new FindDatesFromHeyRemember(heyRemember).Next();
+
                 string jobId = _scheduleType.Schedule(deferredExecution);
                 string heyId = $"{heyRemember.Domain}/{(heyRemember.Type != string.Empty ? heyRemember.Type + "/" : string.Empty)}{heyRemember.Name}/{heyRemember.Id}/{jobId}";
 

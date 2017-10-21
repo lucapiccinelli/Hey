@@ -20,7 +20,9 @@ namespace Hey.Core
 
         public DateTime Next(DateTime from)
         {
-            return CrontabSchedule.Parse(_hey.CronExpression).GetNextOccurrence(from);
+            return _hey.CronExpression == string.Empty
+                ? _hey.When[0]
+                : CrontabSchedule.Parse(_hey.CronExpression).GetNextOccurrence(from);
         }
     }
 }
