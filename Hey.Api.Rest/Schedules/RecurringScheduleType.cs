@@ -22,7 +22,7 @@ namespace Hey.Api.Rest.Schedules
             HeyRememberDto heyRemember = deferredExecution.HeyRemember;
             DateTime when = heyRemember.When[0];
             string id = $"{heyRemember.Type}/{when}/{heyRemember.CronExpression}".GetHashCode().ToString();
-            RecurringJob.AddOrUpdate(id, () => deferredExecution.Execute(deferredExecution.HeyRemember), heyRemember.CronExpression, TimeZoneInfo.Local);
+            RecurringJob.AddOrUpdate(id, () => deferredExecution.Execute(deferredExecution.HeyRemember), heyRemember.CronExpression, TimeZoneInfo.Utc);
             return id;
         }
     }

@@ -15,7 +15,11 @@ namespace Hey.Core
 
         public DateTime Next()
         {
-            return Next(DateTime.Now);
+            DateTime when = _hey.When[0];
+            return Next(
+                when.Date == DateTime.Today
+                    ? DateTime.UtcNow 
+                    : when.Subtract(TimeSpan.FromMinutes(1)));
         }
 
         public DateTime Next(DateTime from)
