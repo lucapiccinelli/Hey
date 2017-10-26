@@ -181,6 +181,9 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="App_Start\HangfireJobRepository.cs" />
     <Compile Include="BinderCanCallTheMethod.cs" />
     <Compile Include="CreatedHttpReturn.cs" />
