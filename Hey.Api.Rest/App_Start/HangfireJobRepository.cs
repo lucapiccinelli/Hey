@@ -71,12 +71,11 @@ namespace Hey.Api.Rest
                 {
                     HeyRememberDto nextDateHeyRember = (HeyRememberDto)recurringDto.Job.Args[0];
                     nextDateHeyRember.When[0] = new FindDatesFromHeyRemember(nextDateHeyRember).Next();
-                    return new HeyRememberResultDto(recurringDto.Id, nextDateHeyRember,
-                            HeyRememberStatus.Scheduled);
+                    return new HeyRememberResultDto(recurringDto.Id, nextDateHeyRember, HeyRememberStatus.Recurring);
                 })
                 .Where(heyRememberRes => heyRememberRes.HeyRemember.Id == id)
                 .ToList();
-            jobs.AddRange(filteredRecurring);
+            jobs.InsertRange(0, filteredRecurring);
 
             return jobs;
         }
@@ -86,7 +85,7 @@ namespace Hey.Api.Rest
             heyRemembers
                 .ForEach(heyRemembersResult =>
                 {
-                    if (string.IsNullOrWhiteSpace(heyRemembersResult.HeyRemember.CronExpression))
+                    if (heyRemembersResult.Status != HeyRememberStatus.Recurring)
                     {
                         BackgroundJob.Delete(heyRemembersResult.JobId);
                     }

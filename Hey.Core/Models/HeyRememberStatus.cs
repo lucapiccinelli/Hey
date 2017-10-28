@@ -2,6 +2,6 @@
 {
     public enum HeyRememberStatus
     {
-        Failed, Succeded, Scheduled, Processing
+        Failed, Succeded, Scheduled, Processing, Recurring
     }
 }

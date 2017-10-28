@@ -17,7 +17,7 @@ namespace Hey.Core
         {
             DateTime when = _hey.When[0];
             return Next(
-                when.Date == DateTime.Today
+                when.Date <= DateTime.Today
                     ? DateTime.UtcNow 
                     : when.Subtract(TimeSpan.FromMinutes(1)));
         }
