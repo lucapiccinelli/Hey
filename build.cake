@@ -31,7 +31,7 @@ var serviceProject = solutions
 string solutionName = solutions.Select(solution => SysPath.GetFileNameWithoutExtension(solution.ToString())).FirstOrDefault();
 
 string packagePrefix = "";
-string basePublishDir = @"\\192.168.0.200\Applicativi\E-Rilasci";
+string basePublishDir = @"\\192.168.0.200\Pubblica";
 string baseDeployDir = "_deploy";
 string deployDir = baseDeployDir;
 
@@ -138,61 +138,63 @@ Task("Deploy")
 });
 
 Task("Publish")
-    .Description("Mette il pacchetto nella shared directory E-Rilasci")
+    .Description("Mette il pacchetto nella shared directory")
     .IsDependentOn("Deploy")
     .Does(() =>
 {
-    if(!DirectoryExists(publishDir))
+    try
     {
-        CreateDirectory(publishDir);
+        EnsureDirectoryExists(publishDir);
         CopyFileToDirectory(packageNamePath, publishDir);
         Information($"pubblicato nella directory {publishDir}");
+    }
+    catch (System.Exception ex)
+    {
+        Error($"Error while publishing in {publishDir}");
+        Warning(ex.ToString());
+    }
 
-        if(gitTagComment != string.Empty)
+    if(gitTagComment != string.Empty)
+    {
+        string gitTag = $"v{version}";
+        Information($"aggiunto tag git {gitTag} e commento \"{gitTagComment}\"");
+        ProcessStartInfo gitTagInfo = new ProcessStartInfo()
         {
-            string gitTag = $"v{version}";
-            Information($"aggiunto tag git {gitTag} e commento \"{gitTagComment}\"");
-            ProcessStartInfo gitTagInfo = new ProcessStartInfo()
-            {
-                Arguments = $"tag -a {gitTag} -m \"{gitTagComment}\"",
-                FileName = "git",
-                CreateNoWindow = true,
-            };
+            Arguments = $"tag -a {gitTag} -m \"{gitTagComment}\"",
+            FileName = "git",
+            CreateNoWindow = true,
+        };
 
-            ProcessStartInfo gitPushInfo = new ProcessStartInfo()
-            {
-                Arguments = "push --tags",
-                FileName = "git",
-                CreateNoWindow = true,
-            };
+        ProcessStartInfo gitPushInfo = new ProcessStartInfo()
+        {
+            Arguments = "push --tags",
+            FileName = "git",
+            CreateNoWindow = true,
+        };
 
-            using(Process tagProcess = Process.Start(gitTagInfo))
+        using(Process tagProcess = Process.Start(gitTagInfo))
+        {
+            tagProcess.WaitForExit();
+            if(tagProcess.ExitCode == 0)
             {
-                tagProcess.WaitForExit();
-                if(tagProcess.ExitCode == 0)
+                using(Process pushProcess = Process.Start(gitPushInfo))
                 {
-                    using(Process pushProcess = Process.Start(gitPushInfo))
+                    pushProcess.WaitForExit();
+                    if(pushProcess.ExitCode == 0)
                     {
-                        pushProcess.WaitForExit();
-                        if(pushProcess.ExitCode == 0)
-                        {
-                            Information($"Tag creato");
-                        }
-                        else
-                        {
-                            Error($"Errore nel push del tag");
-                        }
+                        Information($"Tag creato");
+                    }
+                    else
+                    {
+                        Error($"Errore nel push del tag");
                     }
                 }
-                else
-                {
-                    Error($"Errore nella creazione del tag");
-                }
+            }
+            else
+            {
+                Error($"Errore nella creazione del tag");
             }
         }
-    }else
-    {
-        Warning($"la versione {version} del progetto {solutionName} esiste gia' e non verra' sovrascritta dalla versione corrente");
     }
 });
 
