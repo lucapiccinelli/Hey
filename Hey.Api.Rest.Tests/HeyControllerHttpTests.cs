@@ -85,7 +85,7 @@ namespace Hey.Api.Rest.Tests
 
             IEnumerable<HeyRememberResultDto> result = _heyController.Get(_recurringId);
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
+            Assert.AreEqual(HeyRememberStatus.Recurring, result.First().Status);
             Assert.AreEqual(expectedHeyRemember, result.First().HeyRemember);
         }
 
@@ -120,7 +120,7 @@ namespace Hey.Api.Rest.Tests
 
             IEnumerable<HeyRememberResultDto> result = _heyController.Get(_recurringId);
             Assert.AreEqual(1, result.Count());
-            Assert.AreEqual(HeyRememberStatus.Scheduled, result.First().Status);
+            Assert.AreEqual(HeyRememberStatus.Recurring, result.First().Status);
             Assert.AreEqual(recurringCopy, result.First().HeyRemember);
         }
 
