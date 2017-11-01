@@ -31,7 +31,7 @@ var serviceProject = solutions
 string solutionName = solutions.Select(solution => SysPath.GetFileNameWithoutExtension(solution.ToString())).FirstOrDefault();
 
 string packagePrefix = "";
-string basePublishDir = @"\\192.168.0.200\Pubblica";
+string basePublishDir = @"\\192.168.0.200\Pubblicazioni";
 string baseDeployDir = "_deploy";
 string deployDir = baseDeployDir;
 
@@ -129,6 +129,8 @@ Task("Deploy")
     CopyDirectory(parsedProject.OutputPath, deployDir);
     // DeleteFiles(SysPath.Combine(deployDir, "*.xml"));
     // DeleteFiles(SysPath.Combine(deployDir, "*.pdb"));
+    DeleteFiles(SysPath.Combine(deployDir, "*ConnectionStrings.config"));
+    DeleteFiles(SysPath.Combine(deployDir, "*AppSettings.config"));
     System.IO.File.WriteAllText(SysPath.Combine(deployDir, $"{solutionName}.ver"), version);
 
     packageNamePath = SysPath.Combine(deployDir, $"{solutionName}{configuration}.zip");
