@@ -1,3 +1,4 @@
+using System;
 using System.Web.Http.ExceptionHandling;
 using Hey.Api.Rest.Exceptions;
 using Hey.Core.Models;
@@ -18,6 +19,13 @@ namespace Hey.Api.Rest
 
         public MethodExecutionResultEnum Execute(HeyRememberDto heyRemember)
         {
+            var now = DateTime.UtcNow;
+            if (now < heyRemember.When[0].ToUniversalTime())
+            {
+                _log.Info($"{heyRemember}, will be executed on {heyRemember.When[0]}");
+                return MethodExecutionResultEnum.Empty;
+            }
+
             ResolveMethodByFireMeAttribute resolveMethod = new ResolveMethodByFireMeAttribute(_exceptionHandler);
             IMethodBinder binder = resolveMethod.Find(heyRemember);
             MethodExecutionResultEnum result = binder.Invoke();
