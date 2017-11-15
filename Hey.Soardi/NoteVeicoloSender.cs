@@ -14,7 +14,7 @@ namespace Hey.Soardi
             _messageProvider = messageProvider;
         }
 
-        public void Send(int idNota, string receiverString)
+        public void Send(string receiverString)
         {
             _senderService.Send(_messageProvider, receiverString);
         }

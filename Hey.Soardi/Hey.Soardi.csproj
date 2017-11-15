@@ -48,6 +48,10 @@
     <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CookComputing.XmlRpcV2, Version=3.0.0.0, Culture=neutral, PublicKeyToken=a7d6e17aa302004d, processorArchitecture=MSIL">
+      <HintPath>..\packages\xmlrpcnet.3.0.0.266\lib\net20\CookComputing.XmlRpcV2.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Hangfire.Core, Version=1.6.15.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Hangfire.Core.1.6.15\lib\net45\Hangfire.Core.dll</HintPath>
       <Private>True</Private>
@@ -77,6 +81,7 @@
       <Link>SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="Connections.cs" />
+    <Compile Include="Mail\MailInfo.cs" />
     <Compile Include="Mail\NoteVeicoloMailSender.cs" />
     <Compile Include="NoteVeicoloMessageProvider.cs" />
     <Compile Include="NoteVeicoloSender.cs" />
@@ -91,6 +96,16 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="Sms\AuthDto.cs" />
+    <Compile Include="Sms\Exceptions\SmsCreditException.cs" />
+    <Compile Include="Sms\INotEnoughCredit.cs" />
+    <Compile Include="Sms\ISmsXmlRpcProxy.cs" />
+    <Compile Include="Sms\NotEnoughCreditDto.cs" />
+    <Compile Include="Sms\NotEnoughCreditEmail.cs" />
+    <Compile Include="Sms\NoteVeicoloSmsSender.cs" />
+    <Compile Include="Sms\SendSmsDto.cs" />
+    <Compile Include="Sms\SmsDataDto.cs" />
+    <Compile Include="Sms\SmsServiceSender.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="app.config">
