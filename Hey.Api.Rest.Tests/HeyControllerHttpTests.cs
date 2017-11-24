@@ -73,6 +73,21 @@ namespace Hey.Api.Rest.Tests
         }
 
         [Test, Order(13)]
+        public void TestGetOfASuccededJobById()
+        {
+            HttpTestsClass.executed = false;
+            HttpTestsClass.done = false;
+            _heyController.Post(_succededHeyRemember);
+            while (!HttpTestsClass.done) { }
+            Thread.Sleep(1000);
+            _repository.Refresh();
+            IEnumerable<HeyRememberResultDto> result = _heyController.GetWithSucceded(_succededId);
+            Assert.AreEqual(1, result.Count());
+            Assert.AreEqual(HeyRememberStatus.Succeded, result.First().Status);
+            Assert.AreEqual(_succededHeyRemember, result.First().HeyRemember);
+        }
+
+        [Test, Order(14)]
         public void TestGetOfARecurringJobById()
         {
             _heyController.Post(_recurringHeyRemember);
@@ -139,6 +154,13 @@ namespace Hey.Api.Rest.Tests
         }
 
         [Test, Order(102)]
+        public void TestDeleteOfASuccededJobById()
+        {
+            IHttpActionResult result = _heyController.Delete(_succededId);
+            Assert.IsInstanceOf<OkResult>(result);
+        }
+
+        [Test, Order(103)]
         public void TestDeleteOfARecurringJobById()
         {
             IHttpActionResult result = _heyController.Delete(_recurringId);
@@ -157,6 +179,12 @@ namespace Hey.Api.Rest.Tests
         {
             executed = true;
             Thread.Sleep(2000);
+            done = true;
+        }
+
+        [FireMe("GetSuccessTests")]
+        public void MethodToFireWIthSuccess()
+        {
             done = true;
         }
 

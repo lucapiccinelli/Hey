@@ -16,6 +16,7 @@ namespace Hey.Api.Rest
         private JobList<ScheduledJobDto> _scheduled;
         private JobList<ProcessingJobDto> _processing;
         private JobList<FailedJobDto> _failed;
+        private JobList<SucceededJobDto> _succeded;
         private List<RecurringJobDto> _recurring;
         private readonly IMonitoringApi _hangfire;
 
@@ -30,6 +31,7 @@ namespace Hey.Api.Rest
             _scheduled = _hangfire.ScheduledJobs(0, (int)_hangfire.ScheduledCount());
             _processing = _hangfire.ProcessingJobs(0, (int)_hangfire.ProcessingCount());
             _failed = _hangfire.FailedJobs(0, (int)_hangfire.FailedCount());
+            _succeded = _hangfire.SucceededJobs(0, (int)_hangfire.SucceededListCount());
             _recurring = JobStorage.Current.GetConnection().GetRecurringJobs();
         }
 
@@ -40,7 +42,7 @@ namespace Hey.Api.Rest
                 : RecurringScheduleType.MakePrototype();
         }
 
-        public List<HeyRememberResultDto> GetJobs(string id)
+        public List<HeyRememberResultDto> GetJobs(string id, bool listSucceded = false)
         {
             List<HeyRememberResultDto> filteredScheduled = _scheduled
                 .Select(pair => new KeyValuePair<string, HeyRememberDto>(pair.Key, (HeyRememberDto)pair.Value.Job.Args[0]))
@@ -64,6 +66,17 @@ namespace Hey.Api.Rest
             jobs.AddRange(filteredScheduled);
             jobs.AddRange(filteredFailed);
             jobs.AddRange(filteredProcessing);
+
+            if (listSucceded)
+            {
+                List<HeyRememberResultDto> succededProcessing = _succeded
+                    .Select(pair => new KeyValuePair<string, HeyRememberDto>(pair.Key, (HeyRememberDto)pair.Value.Job.Args[0]))
+                    .Where(pair => pair.Value.Id == id)
+                    .Select(pair => new HeyRememberResultDto(pair.Key, pair.Value, HeyRememberStatus.Succeded))
+                    .ToList();
+
+                jobs.AddRange(succededProcessing);
+            }
 
             //Recurring
             List<HeyRememberResultDto> filteredRecurring = _recurring

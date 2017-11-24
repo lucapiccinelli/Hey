@@ -41,11 +41,11 @@ namespace Hey.Api.Rest.Service
             }
         }
 
-        public List<HeyRememberResultDto> Find(string id)
+        public List<HeyRememberResultDto> Find(string id, bool listSucceded = false)
         {
             try
             {
-                return _repository.GetJobs(id);
+                return _repository.GetJobs(id, listSucceded);
             }
             catch (Exception ex)
             {
@@ -66,7 +66,7 @@ namespace Hey.Api.Rest.Service
 
         private IHeyResponse DeleteAnd(string id, Func<string, IHeyResponse> actionFunction)
         {
-            List<HeyRememberResultDto> heyRemembers = Find(id);
+            List<HeyRememberResultDto> heyRemembers = Find(id, listSucceded: true);
             if (heyRemembers.Count == 0)
             {
                 return new NotFoundHeyResponse(id);

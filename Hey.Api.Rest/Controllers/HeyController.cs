@@ -29,6 +29,13 @@ namespace Hey.Api.Rest.Controllers
             return _heyService.Find(id);
         }
 
+        [HttpGet]
+        [Route("api/{controller}/succeded/{id}/{ext}")]
+        public IEnumerable<HeyRememberResultDto> GetWithSucceded(string id)
+        {
+            return _heyService.Find(id, listSucceded: true);
+        }
+
         // POST: api/Hey
         [ResponseType(typeof(HeyRememberDto))]
         public IHttpActionResult Post([FromBody]HeyRememberDto heyRemember)

@@ -6,7 +6,7 @@ namespace Hey.Api.Rest
     public interface IJobRepository
     {
         IScheduleType MakeASchedulePrototype(HeyRememberDto heyRemember);
-        List<HeyRememberResultDto> GetJobs(string id);
+        List<HeyRememberResultDto> GetJobs(string id, bool listSucceded = false);
         void DeleteJobs(List<HeyRememberResultDto> heyRemembers);
     }
 }

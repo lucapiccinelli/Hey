@@ -16,6 +16,8 @@ namespace Hey.Api.Rest.Tests
         protected HangfireJobRepository _repository;
         protected string _processingId;
         protected HeyRememberDto _processingHeyRemember;
+        protected HeyRememberDto _succededHeyRemember;
+        protected string _succededId;
         protected string _failedId;
         protected HeyRememberDto _failedHeyRemember;
         protected HeyRememberDto _recurringHeyRemember;
@@ -46,6 +48,16 @@ namespace Hey.Api.Rest.Tests
                 Domain = "Hey.Api.Rest.Tests",
                 Name = "GetTests",
                 Id = _processingId,
+                DomainSpecificData = "[]",
+                When = new[] { DateTime.Now }
+            };
+
+            _succededId = "3";
+            _succededHeyRemember = new HeyRememberDto()
+            {
+                Domain = "Hey.Api.Rest.Tests",
+                Name = "GetSuccessTests",
+                Id = _succededId,
                 DomainSpecificData = "[]",
                 When = new[] { DateTime.Now }
             };
