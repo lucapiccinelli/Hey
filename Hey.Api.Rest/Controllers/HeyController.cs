@@ -14,6 +14,7 @@ using Hey.Core.Models;
 namespace Hey.Api.Rest.Controllers
 {
     [EnableCors(origins: "*", headers: "*", methods: "*")]
+    [RoutePrefix("api/Hey")]
     public class HeyController : ApiController
     {
         private readonly IHeyService _heyService;
@@ -30,7 +31,7 @@ namespace Hey.Api.Rest.Controllers
         }
 
         [HttpGet]
-        [Route("api/{controller}/succeded/{id}/{ext}")]
+        [Route("{id}/succeded/{ext=json}")]
         public IEnumerable<HeyRememberResultDto> GetWithSucceded(string id)
         {
             return _heyService.Find(id, listSucceded: true);
