@@ -1,6 +1,7 @@
 ﻿using System.Web.Http;
 using Hangfire;
 using Hey.Api.Rest;
+using Microsoft.Owin;
 using Owin;
 
 namespace Hey.Service

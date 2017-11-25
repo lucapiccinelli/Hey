@@ -28,7 +28,7 @@ namespace Hey.Soardi.Sms
             _notEnoughCredit = notEnoughCredit;
             _username = ConfigurationManager.AppSettings["SmsUser"];
             _password = ConfigurationManager.AppSettings["SmsPassword"];
-            _from = ConfigurationManager.AppSettings["DefaultSender"];
+            _from = ConfigurationManager.AppSettings["DefaultSmsSender"];
         }
 
         [FireMe("Note")]

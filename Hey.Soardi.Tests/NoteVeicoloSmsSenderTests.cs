@@ -21,7 +21,7 @@ namespace Hey.Soardi.Tests
             Mock<INotEnoughCredit> notEnoughCreditMock = new Mock<INotEnoughCredit>();
 
             NotEnoughCreditDto notEnoughCreditDto = new NotEnoughCreditDto(0);
-            NoteVeicoloSmsSender smsSender = new NoteVeicoloSmsSender(notEnoughCreditMock.Object);
+            SoardiSmsSender smsSender = new SoardiSmsSender(notEnoughCreditMock.Object);
 
             Assert.Throws<SmsCreditException>(() => smsSender.Send(0, "3479686512", "Carrozzeria2017", senderServiceMock.Object));
             notEnoughCreditMock.Verify(notEnoughCredit => notEnoughCredit.Handle(It.Is<NotEnoughCreditDto>(dto => dto.Credit == notEnoughCreditDto.Credit)), Times.Once);
