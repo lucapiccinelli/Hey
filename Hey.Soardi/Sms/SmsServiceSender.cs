@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using CookComputing.XmlRpc;
 using Hey.Core;
 using Hey.Core.Services;
+using Hey.Core.Tests;
 using Hey.Soardi.Sms.Exceptions;
 
 namespace Hey.Soardi.Sms
@@ -19,6 +20,7 @@ namespace Hey.Soardi.Sms
         private readonly string _smsPassword;
         private readonly string _senderNumber;
         private readonly ISmsXmlRpcProxy _smsProxy;
+        private PhoneNumberNormalizer _normalizePhoneNumber;
 
 
         public SmsServiceSender(string smsUser, string smsPassword, string senderNumber)
@@ -32,6 +34,8 @@ namespace Hey.Soardi.Sms
             _smsPassword = smsPassword;
             _senderNumber = senderNumber;
             _smsProxy = proxy;
+
+            _normalizePhoneNumber = new PhoneNumberNormalizer();
         }
 
         public void Send(IMessageProvider messageProvider, string receiverString)
@@ -77,11 +81,7 @@ namespace Hey.Soardi.Sms
         }
         private string NormalizePhoneNumber(string phoneNumber)
         {
-            return phoneNumber.StartsWith(ItalyPrefix)
-                ? phoneNumber.Substring(1)
-                : phoneNumber.Length == 10
-                    ? $"39{phoneNumber}"
-                    : phoneNumber;
+            return _normalizePhoneNumber.Normalize(phoneNumber);
         }
 
         private string MakeText(IMessageProvider messageProvider)

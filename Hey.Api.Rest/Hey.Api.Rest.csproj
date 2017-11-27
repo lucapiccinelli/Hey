@@ -197,6 +197,7 @@
       <Link>SolutionInfo.cs</Link>
     </Compile>
     <Compile Include="App_Start\HangfireJobRepository.cs" />
+    <Compile Include="App_Start\ProlongExpirationTimeAttribute.cs" />
     <Compile Include="BinderCanCallTheMethod.cs" />
     <Compile Include="CreatedHttpReturn.cs" />
     <Compile Include="Exceptions\DeferredExecutionException.cs" />

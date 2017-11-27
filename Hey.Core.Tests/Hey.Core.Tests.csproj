@@ -66,6 +66,7 @@
   <ItemGroup>
     <Compile Include="EmailServiceSenderTests.cs" />
     <Compile Include="FindDatesFromHeyRememberTest.cs" />
+    <Compile Include="PhoneNumberNormalizerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

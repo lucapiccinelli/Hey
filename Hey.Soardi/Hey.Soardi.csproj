@@ -138,6 +138,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hey.Core.Tests\Hey.Core.Tests.csproj">
+      <Project>{CCA1A544-F775-4234-ADFB-5B960686690E}</Project>
+      <Name>Hey.Core.Tests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hey.Core\Hey.Core.csproj">
       <Project>{AB9551CB-90AE-4166-871C-4D7F143DFB39}</Project>
       <Name>Hey.Core</Name>
