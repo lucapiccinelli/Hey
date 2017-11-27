@@ -9,6 +9,7 @@ using System.Reflection;
 using System.Web.Http;
 using Autofac;
 using Autofac.Integration.WebApi;
+using Hangfire;
 using Hey.Api.Rest.Exceptions;
 using Hey.Api.Rest.Service;
 using log4net;
@@ -24,6 +25,15 @@ namespace Hey.Api.Rest
             InitializeLog();
             Register(config);
             RegisterDependencies(config);
+            SetInitializationValues(TimeSpan.FromDays(7));
+        }
+
+        public static void Initialize(HttpConfiguration config, TimeSpan jobExpirationTimeout)
+        {
+            InitializeLog();
+            Register(config);
+            RegisterDependencies(config);
+            SetInitializationValues(jobExpirationTimeout);
         }
 
         public static void Register(HttpConfiguration config)
@@ -77,6 +87,11 @@ namespace Hey.Api.Rest
             ILog log = LogManager.GetLogger(typeof(WebApiConfig));
             log.Info("~".PadLeft(100, '~'));
             log.Info($"hey version: {version}");
+        }
+
+        private static void SetInitializationValues(TimeSpan jobExpirationTimeout)
+        {
+            GlobalJobFilters.Filters.Add(new ProlongExpirationTimeAttribute(jobExpirationTimeout));
         }
     }
 }
