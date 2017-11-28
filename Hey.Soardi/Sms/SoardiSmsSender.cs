@@ -54,12 +54,12 @@ namespace Hey.Soardi.Sms
         }
 
         [FireMe("Prenotazione")]
-        public void SendPrenotazione(long idVeicolo, string receiverPhoneNumber, string connection)
+        public void SendPrenotazione(long numPreventivo, string receiverPhoneNumber, string connection)
         {
             using (CarrozzeriaDataContext dt = new CarrozzeriaDataContext(Connections.Strings[connection]))
             {
-                int veicoliCount = dt.Veicolis.Count(veicolo => veicolo.IdVeicolo == idVeicolo);
-                _log.Info($"IdVeicolo: {idVeicolo}, count: {veicoliCount}, sede: {connection}");
+                int veicoliCount = dt.Veicolis.Count(veicolo => veicolo.numPreventivo == numPreventivo);
+                _log.Info($"IdVeicolo: {numPreventivo}, count: {veicoliCount}, sede: {connection}");
                 if (veicoliCount == 0)
                 {
                     _log.Info($"Veicolo non trovato, nessun sms inviato");
