@@ -9,6 +9,8 @@ using Hey.Core.Attributes;
 using Hey.Core.Services;
 using Hey.Soardi.Model;
 using Hey.Soardi.Sms.Exceptions;
+using log4net;
+using ILogNet = log4net.ILog;
 
 namespace Hey.Soardi.Sms
 {
@@ -18,6 +20,8 @@ namespace Hey.Soardi.Sms
         private readonly string _username;
         private readonly string _password;
         private readonly string _from;
+        private ILogNet _log;
+        
 
         public SoardiSmsSender()
             :this(new NotEnoughCreditEmail(ConfigurationManager.AppSettings["SmsCreditWatcherEmail"]))
@@ -31,6 +35,8 @@ namespace Hey.Soardi.Sms
             _username = ConfigurationManager.AppSettings["SmsUser"];
             _password = ConfigurationManager.AppSettings["SmsPassword"];
             _from = ConfigurationManager.AppSettings["DefaultSmsSender"];
+
+            _log = LogManager.GetLogger(GetType());
         }
 
         [FireMe("Note")]
@@ -53,7 +59,12 @@ namespace Hey.Soardi.Sms
             using (CarrozzeriaDataContext dt = new CarrozzeriaDataContext(Connections.Strings[connection]))
             {
                 int veicoliCount = dt.Veicolis.Count(veicolo => veicolo.IdVeicolo == idVeicolo);
-                if(veicoliCount == 0) return;
+                _log.Info($"IdVeicolo: {idVeicolo}, count: {veicoliCount}, sede: {connection}");
+                if (veicoliCount == 0)
+                {
+                    _log.Info($"Veicolo non trovato, nessun sms inviato");
+                    return;
+                }
             }
 
             SendSms(
@@ -68,9 +79,11 @@ namespace Hey.Soardi.Sms
             {
                 var noteVeicoloSender = new NoteVeicoloSender(senderService, messageProvider);
                 noteVeicoloSender.Send(receiverPhoneNumber);
+                _log.Info($"Sms inviato a {receiverPhoneNumber}");
             }
             catch (SmsCreditException e)
             {
+                _log.Info($"Rilevato credito insufficiente inviando sms a {receiverPhoneNumber}");
                 OnNotEnoughCredit(new NotEnoughCreditDto(e.Credit));
                 throw;
             }
