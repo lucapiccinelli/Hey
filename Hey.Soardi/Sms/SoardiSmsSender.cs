@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
 using System.Configuration;
+using System.Data.Linq;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hey.Core;
 using Hey.Core.Attributes;
 using Hey.Core.Services;
+using Hey.Soardi.Model;
 using Hey.Soardi.Sms.Exceptions;
 
 namespace Hey.Soardi.Sms
@@ -46,8 +48,14 @@ namespace Hey.Soardi.Sms
         }
 
         [FireMe("Prenotazione")]
-        public void Send(string receiverPhoneNumber)
+        public void SendPrenotazione(long idVeicolo, string receiverPhoneNumber, string connection)
         {
+            using (CarrozzeriaDataContext dt = new CarrozzeriaDataContext(Connections.Strings[connection]))
+            {
+                int veicoliCount = dt.Veicolis.Count(veicolo => veicolo.IdVeicolo == idVeicolo);
+                if(veicoliCount == 0) return;
+            }
+
             SendSms(
                 receiverPhoneNumber, 
                 new SmsServiceSender(_username, _password, _from),
