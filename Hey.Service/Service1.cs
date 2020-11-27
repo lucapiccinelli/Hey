@@ -30,6 +30,11 @@ namespace Hey.Service
             InitializeComponent();
         }
 
+        public void Start(string[] args)
+        {
+            OnStart(args);
+        }
+
         protected override void OnStart(string[] args)
         {
 #if DEBUG
@@ -40,12 +45,13 @@ namespace Hey.Service
             {
                 string serviceHost = ConfigurationManager.AppSettings["HeyServiceHost"] ?? "localhost";
                 string servicePort = ConfigurationManager.AppSettings["HeyServicePort"] ?? "60400";
+                string serviceProtocol = ConfigurationManager.AppSettings["HeyServiceProtocol"] ?? "http";
 
                 var assemblyFolder = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
                 XmlConfigurator.Configure(new FileInfo(Path.Combine(assemblyFolder, "log.config")));
                 _log = LogManager.GetLogger(GetType());
                 _backgroundJobServer = HangfireConfig.StartHangfire("HeyDb");
-                _disposable = WebApp.Start<Startup>(url: $"http://{serviceHost}:{servicePort}/");
+                _disposable = WebApp.Start<Startup>(url: $"{serviceProtocol}://{serviceHost}:{servicePort}/");
             }
             catch (Exception ex)
             {
