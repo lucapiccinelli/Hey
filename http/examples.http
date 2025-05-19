@@ -1,0 +1,18 @@
+POST http://localhost:60401/api/Hey
+content-type: application/json
+
+{
+   "DomainSpecificData":"[66011,\"darfo@soardionline.it\",\"Darfo\"]",
+   "Id":"66011Darfo",
+   "Domain":"Hey.Soardi",
+   "Type":"Mail",
+   "Name":"Note",
+   "When":[
+      "2025-05-19T14:00:00.024Z"
+   ],
+   "CronExpression":""
+}
+
+###
+
+GET http://localhost:60401/api/Hey/66011

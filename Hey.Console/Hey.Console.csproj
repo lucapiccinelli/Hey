@@ -85,6 +85,10 @@
       <Project>{C0DD4CE3-DF4A-4DDE-AD71-48AC63E639B2}</Project>
       <Name>Hey.Service</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hey.Soardi\Hey.Soardi.csproj">
+      <Project>{3cb257d9-9781-489f-bea7-e6d4f1bb8635}</Project>
+      <Name>Hey.Soardi</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

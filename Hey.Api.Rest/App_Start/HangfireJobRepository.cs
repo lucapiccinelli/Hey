@@ -23,16 +23,24 @@ namespace Hey.Api.Rest
         public HangfireJobRepository()
         {
             _hangfire = JobStorage.Current.GetMonitoringApi();
-            Refresh();
+            Refresh(withSucceded:false);
         }
 
-        public void Refresh()
+        public void Refresh(bool withSucceded = true)
         {
             _scheduled = _hangfire.ScheduledJobs(0, (int)_hangfire.ScheduledCount());
             _processing = _hangfire.ProcessingJobs(0, (int)_hangfire.ProcessingCount());
             _failed = _hangfire.FailedJobs(0, (int)_hangfire.FailedCount());
-            _succeded = _hangfire.SucceededJobs(0, (int)_hangfire.SucceededListCount());
+            if (withSucceded)
+            {
+                RefreshSucceded();
+            }
             _recurring = JobStorage.Current.GetConnection().GetRecurringJobs();
+        }
+        
+        public void RefreshSucceded()
+        {
+            _succeded = _hangfire.SucceededJobs(0, (int)_hangfire.SucceededListCount());
         }
 
         public IScheduleType MakeASchedulePrototype(HeyRememberDto heyRemember)
@@ -69,6 +77,7 @@ namespace Hey.Api.Rest
 
             if (listSucceded)
             {
+                RefreshSucceded();
                 List<HeyRememberResultDto> succededProcessing = _succeded
                     .Select(pair => new KeyValuePair<string, HeyRememberDto>(pair.Key, (HeyRememberDto)pair.Value.Job.Args[0]))
                     .Where(pair => pair.Value.Id == id)
