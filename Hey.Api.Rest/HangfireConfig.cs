@@ -18,7 +18,9 @@ namespace Hey.Api.Rest
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<LogExceptionHandler>().As<IHeyExceptionHandler>();
             builder.RegisterType<HeyRememberDeferredExecution>();
-            
+
+            GlobalJobFilters.Filters.Add(new AutomaticRetryAttribute { Attempts = 10, OnAttemptsExceeded = AttemptsExceededAction.Delete});
+
             HangfireGlobalConfiguration.Configuration
                 .UseAutofacActivator(builder.Build())
                 .UseLog4NetLogProvider()
