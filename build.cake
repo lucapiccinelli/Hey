@@ -31,7 +31,7 @@ var serviceProject = solutions
 string solutionName = solutions.Select(solution => SysPath.GetFileNameWithoutExtension(solution.ToString())).FirstOrDefault();
 
 string packagePrefix = "";
-string basePublishDir = @"\\192.168.0.200\Pubblicazioni";
+string basePublishDir = @"\\192.168.0.9\Pubblicazioni";
 string baseDeployDir = "_deploy";
 string deployDir = baseDeployDir;
 
