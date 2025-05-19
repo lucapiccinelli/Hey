@@ -12,7 +12,7 @@ namespace Hey.Soardi.Tests
         public void TestThatMessageProviderCanRetreiveTheCorrectString()
         {
             var ping = new Ping();
-            PingReply reply = ping.Send("192.168.0.200");
+            PingReply reply = ping.Send("192.168.0.9");
             if (reply.Status != IPStatus.Success)
             {
                 Assert.Ignore("La VPN e' spenta");
@@ -28,7 +28,7 @@ namespace Hey.Soardi.Tests
         public void TestThatMessageProviderCanRetreiveTheCorrectAbstract()
         {
             var ping = new Ping();
-            PingReply reply = ping.Send("192.168.0.200");
+            PingReply reply = ping.Send("192.168.0.9");
             if (reply.Status != IPStatus.Success)
             {
                 Assert.Ignore("La VPN e' spenta");
@@ -44,7 +44,7 @@ namespace Hey.Soardi.Tests
         public void TestThatMessageProviderCanRetreiveFromConnectionString()
         {
             var ping = new Ping();
-            PingReply reply = ping.Send("192.168.0.200");
+            PingReply reply = ping.Send("192.168.0.9");
             if (reply.Status != IPStatus.Success)
             {
                 Assert.Ignore("La VPN e' spenta");
